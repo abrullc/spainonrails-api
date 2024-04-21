@@ -82,4 +82,129 @@ class Ruta
         $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * Get the value of id
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     */
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of origen
+     */
+    public function getOrigen(): string
+    {
+        return $this->origen;
+    }
+
+    /**
+     * Set the value of origen
+     */
+    public function setOrigen(string $origen): self
+    {
+        $this->origen = $origen;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of destino
+     */
+    public function getDestino(): string
+    {
+        return $this->destino;
+    }
+
+    /**
+     * Set the value of destino
+     */
+    public function setDestino(string $destino): self
+    {
+        $this->destino = $destino;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of salida
+     */
+    public function getSalida(): \DateTime
+    {
+        return $this->salida;
+    }
+
+    /**
+     * Set the value of salida
+     */
+    public function setSalida(\DateTime $salida): self
+    {
+        $this->salida = $salida;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of llegada
+     */
+    public function getLlegada(): \DateTime
+    {
+        return $this->llegada;
+    }
+
+    /**
+     * Set the value of llegada
+     */
+    public function setLlegada(\DateTime $llegada): self
+    {
+        $this->llegada = $llegada;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tren
+     */
+    public function getTren(): Tren
+    {
+        return $this->tren;
+    }
+
+    /**
+     * Set the value of tren
+     */
+    public function setTren(Tren $tren): self
+    {
+        $this->tren = $tren;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of usuario
+     */
+    public function getUsuario(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Set the value of usuario
+     */
+    public function setUsuario(\Doctrine\Common\Collections\Collection $usuario): self
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
 }

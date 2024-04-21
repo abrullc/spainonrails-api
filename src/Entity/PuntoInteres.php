@@ -74,4 +74,129 @@ class PuntoInteres
         $this->planViaje = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * Get the value of id
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     */
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of nombre
+     */
+    public function getNombre(): string
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set the value of nombre
+     */
+    public function setNombre(string $nombre): self
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of direccion
+     */
+    public function getDireccion(): string
+    {
+        return $this->direccion;
+    }
+
+    /**
+     * Set the value of direccion
+     */
+    public function setDireccion(string $direccion): self
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of longitud
+     */
+    public function getLongitud(): float
+    {
+        return $this->longitud;
+    }
+
+    /**
+     * Set the value of longitud
+     */
+    public function setLongitud(float $longitud): self
+    {
+        $this->longitud = $longitud;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of latitud
+     */
+    public function getLatitud(): float
+    {
+        return $this->latitud;
+    }
+
+    /**
+     * Set the value of latitud
+     */
+    public function setLatitud(float $latitud): self
+    {
+        $this->latitud = $latitud;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of estacion
+     */
+    public function getEstacion(): Estacion
+    {
+        return $this->estacion;
+    }
+
+    /**
+     * Set the value of estacion
+     */
+    public function setEstacion(Estacion $estacion): self
+    {
+        $this->estacion = $estacion;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of planViaje
+     */
+    public function getPlanViaje(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->planViaje;
+    }
+
+    /**
+     * Set the value of planViaje
+     */
+    public function setPlanViaje(\Doctrine\Common\Collections\Collection $planViaje): self
+    {
+        $this->planViaje = $planViaje;
+
+        return $this;
+    }
 }

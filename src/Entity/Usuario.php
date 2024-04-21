@@ -65,4 +65,111 @@ class Usuario
         $this->planViaje = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * Get the value of id
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     */
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of username
+     */
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set the value of username
+     */
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of password
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set the value of password
+     */
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of email
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set the value of email
+     */
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of ruta
+     */
+    public function getRuta(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->ruta;
+    }
+
+    /**
+     * Set the value of ruta
+     */
+    public function setRuta(\Doctrine\Common\Collections\Collection $ruta): self
+    {
+        $this->ruta = $ruta;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of planViaje
+     */
+    public function getPlanViaje(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->planViaje;
+    }
+
+    /**
+     * Set the value of planViaje
+     */
+    public function setPlanViaje(\Doctrine\Common\Collections\Collection $planViaje): self
+    {
+        $this->planViaje = $planViaje;
+
+        return $this;
+    }
 }

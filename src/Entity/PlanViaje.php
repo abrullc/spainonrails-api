@@ -60,4 +60,57 @@ class PlanViaje
         $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * Get the value of id
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     */
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of puntoInteres
+     */
+    public function getPuntoInteres(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->puntoInteres;
+    }
+
+    /**
+     * Set the value of puntoInteres
+     */
+    public function setPuntoInteres(\Doctrine\Common\Collections\Collection $puntoInteres): self
+    {
+        $this->puntoInteres = $puntoInteres;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of usuario
+     */
+    public function getUsuario(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Set the value of usuario
+     */
+    public function setUsuario(\Doctrine\Common\Collections\Collection $usuario): self
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
 }
