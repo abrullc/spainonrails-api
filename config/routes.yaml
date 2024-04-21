@@ -1,3 +1,70 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+#    methods: GET|POST|PUT|DELETE
+
+# ESTACIONES
+estaciones:
+    path: /estaciones
+    controller: App\Controller\EstacionController::estaciones
+    methods: GET|POST
+
+estacion:
+    path: /estacion/{id}
+    controller: App\Controller\EstacionController::estacion
+    methods: GET|PUT|DELETE
+
+# PLANES DE VIAJE
+planes_viaje:
+    path: /planesViaje
+    controller: App\Controller\PlanViajeController::planesViaje
+    methods: GET|POST
+
+plan_viaje:
+    path: /planViaje/{id}
+    controller: App\Controller\PlanViajeController::planViaje
+    methods: GET|PUT|DELETE
+
+# PUNTOS DE INTERÉS
+puntos_interes:
+    path: /puntosInteres
+    controller: App\Controller\PuntoInteresController::puntosInteres
+    methods: GET|POST
+
+punto_interes:
+    path: /puntoInteres/{id}
+    controller: App\Controller\PuntoInteresController::puntoInteres
+    methods: GET|PUT|DELETE
+
+# RUTAS
+rutas:
+    path: /rutas
+    controller: App\Controller\RutaController::rutas
+    methods: GET|POST
+
+ruta:
+    path: /ruta/{id}
+    controller: App\Controller\RutaController::ruta
+    methods: GET|PUT|DELETE
+
+# TRENES
+trenes:
+    path: /trenes
+    controller: App\Controller\TrenController::trenes
+    methods: GET|POST
+
+tren:
+    path: /tren/{id}
+    controller: App\Controller\TrenController::tren
+    methods: GET|PUT|DELETE
+
+# USUARIOS
+usuarios:
+    path: /usuarios
+    controller: App\Controller\UsuarioController::usuarios
+    methods: GET|POST
+
+usuario:
+    path: /usuario/{id}
+    controller: App\Controller\UsuarioController::usuario
+    methods: GET|PUT|DELETE
