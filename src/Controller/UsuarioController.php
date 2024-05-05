@@ -90,7 +90,7 @@ class UsuarioController extends AbstractController
             return new Response($usuario);
             }
 
-            return new JsonResponse(["msg" => "Estación no encontrada"], 404);
+            return new JsonResponse(["msg" => "Usuario no encontrado"], 404);
         }
 
         if ($request->isMethod("DELETE")) {

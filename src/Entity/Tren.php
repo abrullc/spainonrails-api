@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Tren
@@ -18,6 +19,8 @@ class Tren
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Groups("tren")
      */
     private $id;
 
@@ -25,6 +28,8 @@ class Tren
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=45, nullable=false)
+     * 
+     * @Groups("tren")
      */
     private $nombre;
 
@@ -32,6 +37,8 @@ class Tren
      * @var int
      *
      * @ORM\Column(name="capacidad", type="integer", nullable=false)
+     * 
+     * @Groups("tren")
      */
     private $capacidad;
 
