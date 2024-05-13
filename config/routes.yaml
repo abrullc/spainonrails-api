@@ -47,6 +47,16 @@ ruta:
     controller: App\Controller\RutaController::ruta
     methods: GET|PUT|DELETE
 
+tren_ruta:
+    path: /ruta/{id}/tren
+    controller: App\Controller\RutaController::trenRuta
+    methods: GET|DELETE
+
+add_tren_ruta:
+    path: /ruta/{idRuta}/tren/{idTren}
+    controller: App\Controller\RutaController::addTrenRuta
+    methods: POST
+
 # TRENES
 trenes:
     path: /trenes

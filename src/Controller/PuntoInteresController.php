@@ -93,7 +93,7 @@ class PuntoInteresController extends AbstractController
             return new Response($puntoInteres);
             }
 
-            return new JsonResponse(["msg" => "Estación no encontrada"], 404);
+            return new JsonResponse(["msg" => "Punto de interés no encontrado"], 404);
         }
 
         if ($request->isMethod("DELETE")) {

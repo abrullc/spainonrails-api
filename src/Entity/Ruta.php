@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Ruta
@@ -18,6 +19,8 @@ class Ruta
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Groups("ruta")
      */
     private $id;
 
@@ -25,6 +28,8 @@ class Ruta
      * @var string
      *
      * @ORM\Column(name="origen", type="string", length=45, nullable=false)
+     * 
+     * @Groups("ruta")
      */
     private $origen;
 
@@ -32,6 +37,8 @@ class Ruta
      * @var string
      *
      * @ORM\Column(name="destino", type="string", length=45, nullable=false)
+     * 
+     * @Groups("ruta")
      */
     private $destino;
 
@@ -39,6 +46,8 @@ class Ruta
      * @var \DateTime
      *
      * @ORM\Column(name="salida", type="datetime", nullable=false)
+     * 
+     * @Groups("ruta")
      */
     private $salida;
 
@@ -46,6 +55,8 @@ class Ruta
      * @var \DateTime
      *
      * @ORM\Column(name="llegada", type="datetime", nullable=false)
+     * 
+     * @Groups("ruta")
      */
     private $llegada;
 
@@ -56,6 +67,8 @@ class Ruta
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tren_id", referencedColumnName="id")
      * })
+     * 
+     * @Groups("ruta")
      */
     private $tren;
 
@@ -71,6 +84,8 @@ class Ruta
      *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      *   }
      * )
+     * 
+     * @Groups("ruta")
      */
     private $usuario = array();
 
@@ -175,7 +190,7 @@ class Ruta
     /**
      * Get the value of tren
      */
-    public function getTren(): Tren
+    public function getTren(): Tren | null
     {
         return $this->tren;
     }
