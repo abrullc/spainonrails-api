@@ -63,7 +63,7 @@ class RutaController extends AbstractController
             $ruta = $serializer->serialize(
                 $ruta,
                 "json",
-                ["groups" => ["ruta"]]
+                ["groups" => ["ruta", "tren"]]
             );
 
             return new Response($ruta);
@@ -85,7 +85,7 @@ class RutaController extends AbstractController
                 $ruta = $serializer->serialize(
                     $ruta,
                     "json",
-                    ["groups" => ["ruta"]]
+                    ["groups" => ["ruta", "tren"]]
                 );
 
                 return new Response($ruta);
@@ -102,7 +102,7 @@ class RutaController extends AbstractController
             $deletedRuta = $serializer->serialize(
                 $deletedRuta, 
                 "json", 
-                ["groups" => ["ruta"]]
+                ["groups" => ["ruta", "tren"]]
             );
 
             return new Response($deletedRuta);
@@ -132,17 +132,18 @@ class RutaController extends AbstractController
         }
 
         if ($request->isMethod("DELETE")) {
-            $deletedTrenRuta = clone $trenRuta;
-            $this->getDoctrine()->getManager()->remove($ruta);
+            $ruta->setTren(null);
+
+            $this->getDoctrine()->getManager()->persist($ruta);
             $this->getDoctrine()->getManager()->flush();
-            
-            $deletedTrenRuta = $serializer->serialize(
-                $deletedTrenRuta, 
-                "json", 
-                ["groups" => ["tren"]]
+
+            $ruta = $serializer->serialize(
+                $ruta,
+                "json",
+                ["groups" => ["ruta", "tren"]]
             );
 
-            return new Response($deletedTrenRuta);
+            return new Response($ruta);
         }
 
         return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
@@ -172,7 +173,7 @@ class RutaController extends AbstractController
                 $ruta = $serializer->serialize(
                     $ruta,
                     "json",
-                    ["groups" => ["ruta"]]
+                    ["groups" => ["ruta", "tren"]]
                 );
 
                 return new Response($ruta);

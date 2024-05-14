@@ -198,7 +198,7 @@ class Ruta
     /**
      * Set the value of tren
      */
-    public function setTren(Tren $tren): self
+    public function setTren(Tren | null $tren): self
     {
         $this->tren = $tren;
 
