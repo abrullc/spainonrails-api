@@ -70,16 +70,19 @@ class Estacion
     private $latitud;
 
     /**
-     * @var Ruta
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToOne(targetEntity="Ruta")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ruta_id", referencedColumnName="id")
-     * })
-     * 
-     * @Groups("estacion")
+     * @ORM\ManyToMany(targetEntity="Ruta", mappedBy="estacion")
      */
-    private $ruta;
+    private $ruta = array();
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ruta = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     /**
@@ -193,7 +196,7 @@ class Estacion
     /**
      * Get the value of ruta
      */
-    public function getRuta(): Ruta
+    public function getRuta(): \Doctrine\Common\Collections\Collection
     {
         return $this->ruta;
     }
@@ -201,7 +204,7 @@ class Estacion
     /**
      * Set the value of ruta
      */
-    public function setRuta(Ruta $ruta): self
+    public function setRuta(\Doctrine\Common\Collections\Collection $ruta): self
     {
         $this->ruta = $ruta;
 

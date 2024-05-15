@@ -75,6 +75,21 @@ class Ruta
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
+     * @ORM\ManyToMany(targetEntity="Estacion", inversedBy="ruta")
+     * @ORM\JoinTable(name="parada",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="ruta_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="estacion_id", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $estacion = array();
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
      * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="ruta")
      * @ORM\JoinTable(name="pasaje",
      *   joinColumns={
@@ -201,6 +216,24 @@ class Ruta
     public function setTren(Tren | null $tren): self
     {
         $this->tren = $tren;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of estacion
+     */
+    public function getEstacion(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->estacion;
+    }
+
+    /**
+     * Set the value of estacion
+     */
+    public function setEstacion(\Doctrine\Common\Collections\Collection $estacion): self
+    {
+        $this->estacion = $estacion;
 
         return $this;
     }
