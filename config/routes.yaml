@@ -14,6 +14,16 @@ estacion:
     controller: App\Controller\EstacionController::estacion
     methods: GET|PUT|DELETE
 
+rutas_estacion:
+    path: /estacion/{idEstacion}/rutas
+    controller: App\Controller\EstacionController::rutasEstacion
+    methods: GET
+
+ruta_estacion:
+    path: /estacion/{idEstacion}/ruta/{idRuta}
+    controller: App\Controller\EstacionController::rutaEstacion
+    methods: POST|DELETE
+
 # PLANES DE VIAJE
 planes_viaje:
     path: /planesViaje

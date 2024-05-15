@@ -73,6 +73,8 @@ class Estacion
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Ruta", mappedBy="estacion")
+     * 
+     * @Groups("estacion")
      */
     private $ruta = array();
 
