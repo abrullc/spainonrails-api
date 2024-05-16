@@ -116,11 +116,11 @@ class EstacionController extends AbstractController
 
     public function rutasEstacion(SerializerInterface $serializer, Request $request)
     {
-        $idEstacion = $request->get("idEstacion");
+        $id = $request->get("id");
 
         $estacion = $this->getDoctrine()
             ->getRepository(Estacion::class)
-            ->findOneBy(["id" => $idEstacion]);
+            ->findOneBy(["id" => $id]);
         
         if (!empty($estacion))
         {
@@ -160,8 +160,9 @@ class EstacionController extends AbstractController
 
             if (!empty($ruta))
             {
+                $rutasEstacion = $estacion->getRuta();
+
                 if ($request->isMethod("POST")) {
-                    $rutasEstacion = $estacion->getRuta();
                     $rutasEstacion[] = $ruta;
                     $estacion->setRuta($rutasEstacion);
                     
@@ -178,9 +179,16 @@ class EstacionController extends AbstractController
                 }
 
                 if ($request->isMethod("DELETE")) {
-                    $rutasEstacion = $estacion->getRuta();
-                    $rutasEstacion[] = $ruta;
-                    $estacion->setRuta($rutasEstacion);
+                    $updatedRutasEstacion = [];
+                    foreach ($rutasEstacion as $rutaEstacion)
+                    {
+                        if ($rutaEstacion != $ruta)
+                        {
+                            $updatedRutasEstacion[] = $rutaEstacion;
+                        }
+                    }
+
+                    $estacion->setRuta($updatedRutasEstacion);
                     
                     $this->getDoctrine()->getManager()->persist($estacion);
                     $this->getDoctrine()->getManager()->flush();
@@ -188,7 +196,7 @@ class EstacionController extends AbstractController
                     $estacion = $serializer->serialize(
                         $estacion,
                         "json",
-                        ["groups" => ["estacion"]]
+                        ["groups" => ["estacion", "ruta"]]
                     );
                     
                     return new Response($estacion);

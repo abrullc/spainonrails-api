@@ -15,7 +15,7 @@ estacion:
     methods: GET|PUT|DELETE
 
 rutas_estacion:
-    path: /estacion/{idEstacion}/rutas
+    path: /estacion/{id}/rutas
     controller: App\Controller\EstacionController::rutasEstacion
     methods: GET
 
@@ -66,6 +66,16 @@ add_tren_ruta:
     path: /ruta/{idRuta}/tren/{idTren}
     controller: App\Controller\RutaController::addTrenRuta
     methods: POST
+
+estaciones_ruta:
+    path: /ruta/{id}/estaciones
+    controller: App\Controller\RutaController::estacionesRuta
+    methods: GET
+
+estacion_ruta:
+    path: /ruta/{idRuta}/estacion/{idEstacion}
+    controller: App\Controller\RutaController::estacionRuta
+    methods: POST|DELETE
 
 # TRENES
 trenes:
