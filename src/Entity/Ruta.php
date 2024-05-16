@@ -109,6 +109,7 @@ class Ruta
      */
     public function __construct()
     {
+        $this->estacion = new \Doctrine\Common\Collections\ArrayCollection();
         $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
     }
 

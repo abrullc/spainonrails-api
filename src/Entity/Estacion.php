@@ -8,7 +8,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * Estacion
  *
- * @ORM\Table(name="estacion", indexes={@ORM\Index(name="fk_estacion_ruta", columns={"ruta_id"})})
+ * @ORM\Table(name="estacion")
  * @ORM\Entity
  */
 class Estacion
@@ -85,7 +85,6 @@ class Estacion
     {
         $this->ruta = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get the value of id
