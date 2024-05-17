@@ -235,7 +235,7 @@ class RutaController extends AbstractController
                 $estacionesRuta = $ruta->getEstacion();
 
                 if ($request->isMethod("POST")) {
-                    $estacionesRuta[] = $estacion;
+                    $estacionesRuta->add($estacion);
                     $ruta->setEstacion($estacionesRuta);
                     
                     $this->getDoctrine()->getManager()->persist($ruta);
@@ -251,17 +251,9 @@ class RutaController extends AbstractController
                 }
 
                 if ($request->isMethod("DELETE")) {
-                    $updatedEstacionesRuta = [];
-                    foreach ($estacionesRuta as $estacionRuta)
-                    {
-                        if ($estacionRuta != $estacion)
-                        {
-                            $updatedEstacionesRuta[] = $estacionRuta;
-                        }
-                    }
-
-                    $ruta->setEstacion($updatedEstacionesRuta);
-                    
+                    $estacionesRuta->removeElement($estacion);
+                    $ruta->setEstacion($estacionesRuta);
+                                        
                     $this->getDoctrine()->getManager()->persist($ruta);
                     $this->getDoctrine()->getManager()->flush();
                     

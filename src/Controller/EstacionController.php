@@ -67,7 +67,7 @@ class EstacionController extends AbstractController
                 $estacion = $serializer->serialize(
                     $estacion,
                     "json",
-                    ["groups" => ["estacion"]]
+                    ["groups" => ["estacion", "ruta"]]
                 );
     
                 return new Response($estacion);
@@ -163,7 +163,7 @@ class EstacionController extends AbstractController
                 $rutasEstacion = $estacion->getRuta();
 
                 if ($request->isMethod("POST")) {
-                    $rutasEstacion[] = $ruta;
+                    $rutasEstacion->add($ruta);
                     $estacion->setRuta($rutasEstacion);
                     
                     $this->getDoctrine()->getManager()->persist($estacion);
@@ -179,16 +179,8 @@ class EstacionController extends AbstractController
                 }
 
                 if ($request->isMethod("DELETE")) {
-                    $updatedRutasEstacion = [];
-                    foreach ($rutasEstacion as $rutaEstacion)
-                    {
-                        if ($rutaEstacion != $ruta)
-                        {
-                            $updatedRutasEstacion[] = $rutaEstacion;
-                        }
-                    }
-
-                    $estacion->setRuta($updatedRutasEstacion);
+                    $rutasEstacion->removeElement($ruta);
+                    $estacion->setRuta($rutasEstacion);
                     
                     $this->getDoctrine()->getManager()->persist($estacion);
                     $this->getDoctrine()->getManager()->flush();
