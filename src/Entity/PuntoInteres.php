@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * PuntoInteres
@@ -18,6 +19,8 @@ class PuntoInteres
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Groups("puntoInteres")
      */
     private $id;
 
@@ -25,6 +28,8 @@ class PuntoInteres
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
+     * 
+     * @Groups("puntoInteres")
      */
     private $nombre;
 
@@ -32,6 +37,8 @@ class PuntoInteres
      * @var string
      *
      * @ORM\Column(name="direccion", type="string", length=150, nullable=false)
+     * 
+     * @Groups("puntoInteres")
      */
     private $direccion;
 
@@ -39,6 +46,8 @@ class PuntoInteres
      * @var float
      *
      * @ORM\Column(name="longitud", type="float", precision=10, scale=0, nullable=false)
+     * 
+     * @Groups("puntoInteres")
      */
     private $longitud;
 
@@ -46,6 +55,8 @@ class PuntoInteres
      * @var float
      *
      * @ORM\Column(name="latitud", type="float", precision=10, scale=0, nullable=false)
+     * 
+     * @Groups("puntoInteres")
      */
     private $latitud;
 
@@ -56,6 +67,8 @@ class PuntoInteres
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="estacion_id", referencedColumnName="id")
      * })
+     * 
+     * @Groups("puntoInteres")
      */
     private $estacion;
 
@@ -63,6 +76,8 @@ class PuntoInteres
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="PlanViaje", mappedBy="puntoInteres")
+     * 
+     * @Groups("puntoInteres")
      */
     private $planViaje = array();
 

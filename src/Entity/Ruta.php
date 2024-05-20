@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Ruta
@@ -18,6 +19,8 @@ class Ruta
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Groups("ruta")
      */
     private $id;
 
@@ -25,6 +28,8 @@ class Ruta
      * @var string
      *
      * @ORM\Column(name="origen", type="string", length=45, nullable=false)
+     * 
+     * @Groups("ruta")
      */
     private $origen;
 
@@ -32,6 +37,8 @@ class Ruta
      * @var string
      *
      * @ORM\Column(name="destino", type="string", length=45, nullable=false)
+     * 
+     * @Groups("ruta")
      */
     private $destino;
 
@@ -39,6 +46,8 @@ class Ruta
      * @var \DateTime
      *
      * @ORM\Column(name="salida", type="datetime", nullable=false)
+     * 
+     * @Groups("ruta")
      */
     private $salida;
 
@@ -46,6 +55,8 @@ class Ruta
      * @var \DateTime
      *
      * @ORM\Column(name="llegada", type="datetime", nullable=false)
+     * 
+     * @Groups("ruta")
      */
     private $llegada;
 
@@ -56,8 +67,25 @@ class Ruta
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tren_id", referencedColumnName="id")
      * })
+     * 
+     * @Groups("ruta")
      */
     private $tren;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Estacion", inversedBy="ruta")
+     * @ORM\JoinTable(name="parada",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="ruta_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="estacion_id", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $estacion = array();
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -71,6 +99,8 @@ class Ruta
      *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      *   }
      * )
+     * 
+     * @Groups("ruta")
      */
     private $usuario = array();
 
@@ -79,6 +109,7 @@ class Ruta
      */
     public function __construct()
     {
+        $this->estacion = new \Doctrine\Common\Collections\ArrayCollection();
         $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -175,7 +206,7 @@ class Ruta
     /**
      * Get the value of tren
      */
-    public function getTren(): Tren
+    public function getTren(): Tren | null
     {
         return $this->tren;
     }
@@ -183,9 +214,27 @@ class Ruta
     /**
      * Set the value of tren
      */
-    public function setTren(Tren $tren): self
+    public function setTren(Tren | null $tren): self
     {
         $this->tren = $tren;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of estacion
+     */
+    public function getEstacion(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->estacion;
+    }
+
+    /**
+     * Set the value of estacion
+     */
+    public function setEstacion(\Doctrine\Common\Collections\Collection $estacion): self
+    {
+        $this->estacion = $estacion;
 
         return $this;
     }

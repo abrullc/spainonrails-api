@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * PlanViaje
@@ -18,6 +19,8 @@ class PlanViaje
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Groups("planViaje")
      */
     private $id;
 
@@ -33,6 +36,8 @@ class PlanViaje
      *     @ORM\JoinColumn(name="punto_interes_id", referencedColumnName="id")
      *   }
      * )
+     * 
+     * @Groups("planViaje")
      */
     private $puntoInteres = array();
 
@@ -48,6 +53,8 @@ class PlanViaje
      *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      *   }
      * )
+     * 
+     * @Groups("planViaje")
      */
     private $usuario = array();
 

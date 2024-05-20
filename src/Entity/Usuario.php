@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Usuario
@@ -18,6 +19,8 @@ class Usuario
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Groups("usuario")
      */
     private $id;
 
@@ -25,6 +28,8 @@ class Usuario
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=45, nullable=false)
+     * 
+     * @Groups("usuario")
      */
     private $username;
 
@@ -32,6 +37,8 @@ class Usuario
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=45, nullable=false)
+     * 
+     * @Groups("usuario")
      */
     private $password;
 
@@ -39,6 +46,8 @@ class Usuario
      * @var string|null
      *
      * @ORM\Column(name="email", type="string", length=100, nullable=true)
+     * 
+     * @Groups("usuario")
      */
     private $email;
 
@@ -46,6 +55,8 @@ class Usuario
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Ruta", mappedBy="usuario")
+     * 
+     * @Groups("usuario")
      */
     private $ruta = array();
 
@@ -53,6 +64,8 @@ class Usuario
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="PlanViaje", mappedBy="usuario")
+     * 
+     * @Groups("usuario")
      */
     private $planViaje = array();
 

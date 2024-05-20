@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Estacion
  *
- * @ORM\Table(name="estacion", indexes={@ORM\Index(name="fk_estacion_ruta", columns={"ruta_id"})})
+ * @ORM\Table(name="estacion")
  * @ORM\Entity
  */
 class Estacion
@@ -18,6 +19,8 @@ class Estacion
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Groups("estacion")
      */
     private $id;
 
@@ -25,6 +28,8 @@ class Estacion
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
+     * 
+     * @Groups("estacion")
      */
     private $nombre;
 
@@ -32,6 +37,8 @@ class Estacion
      * @var string
      *
      * @ORM\Column(name="poblacion", type="string", length=100, nullable=false)
+     * 
+     * @Groups("estacion")
      */
     private $poblacion;
 
@@ -39,6 +46,8 @@ class Estacion
      * @var string
      *
      * @ORM\Column(name="direccion", type="string", length=150, nullable=false)
+     * 
+     * @Groups("estacion")
      */
     private $direccion;
 
@@ -46,6 +55,8 @@ class Estacion
      * @var float
      *
      * @ORM\Column(name="longitud", type="float", precision=10, scale=0, nullable=false)
+     * 
+     * @Groups("estacion")
      */
     private $longitud;
 
@@ -53,19 +64,26 @@ class Estacion
      * @var float
      *
      * @ORM\Column(name="latitud", type="float", precision=10, scale=0, nullable=false)
+     * 
+     * @Groups("estacion")
      */
     private $latitud;
 
     /**
-     * @var Ruta
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToOne(targetEntity="Ruta")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ruta_id", referencedColumnName="id")
-     * })
+     * @ORM\ManyToMany(targetEntity="Ruta", mappedBy="estacion")
+     * 
      */
-    private $ruta;
+    private $ruta = array();
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ruta = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get the value of id
@@ -178,7 +196,7 @@ class Estacion
     /**
      * Get the value of ruta
      */
-    public function getRuta(): Ruta
+    public function getRuta(): \Doctrine\Common\Collections\Collection
     {
         return $this->ruta;
     }
@@ -186,7 +204,7 @@ class Estacion
     /**
      * Set the value of ruta
      */
-    public function setRuta(Ruta $ruta): self
+    public function setRuta(\Doctrine\Common\Collections\Collection $ruta): self
     {
         $this->ruta = $ruta;
 
