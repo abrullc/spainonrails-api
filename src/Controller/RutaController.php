@@ -152,7 +152,8 @@ class RutaController extends AbstractController
 
     public function addTrenRuta(SerializerInterface $serializer, Request $request)
     {
-        if ($request->isMethod("POST")) {
+        if ($request->isMethod("POST"))
+        {
             $idRuta = $request->get("idRuta");
             $idTren = $request->get("idTren");
 
@@ -160,24 +161,29 @@ class RutaController extends AbstractController
                 ->getRepository(Ruta::class)
                 ->findOneBy(["id" => $idRuta]);
 
-            if (!empty($ruta)) {
-
+            if (!empty($ruta))
+            {
                 $tren = $this->getDoctrine()
                     ->getRepository(Tren::class)
                     ->findOneBy(["id" => $idTren]);
-                
-                $ruta->setTren($tren);
-                
-                $this->getDoctrine()->getManager()->persist($ruta);
-                $this->getDoctrine()->getManager()->flush();
 
-                $ruta = $serializer->serialize(
-                    $ruta,
-                    "json",
-                    ["groups" => ["ruta", "tren"]]
-                );
+                if (!empty($tren))
+                {
+                    $ruta->setTren($tren);
+                
+                    $this->getDoctrine()->getManager()->persist($ruta);
+                    $this->getDoctrine()->getManager()->flush();
 
-                return new Response($ruta);
+                    $ruta = $serializer->serialize(
+                        $ruta,
+                        "json",
+                        ["groups" => ["ruta", "tren"]]
+                    );
+
+                    return new Response($ruta);
+                }
+
+                return new JsonResponse(["msg" => "Tren no encontrado"], 404);
             }
 
             return new JsonResponse(["msg" => "Ruta no encontrada"], 404);
@@ -202,16 +208,16 @@ class RutaController extends AbstractController
                 $estacionesRuta = $serializer->serialize(
                     $estacionesRuta,
                     "json",
-                    ["groups" => ["estacion"]]
+                    ["groups" => ["ruta", "estacion"]]
                 );
-    
+
                 return new Response($estacionesRuta);
             }
 
             return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
         }
 
-        return new JsonResponse(["msg" => "Estación no encontrada"], 404);
+        return new JsonResponse(["msg" => "Ruta no encontrada"], 404);
     }
 
     public function estacionRuta(SerializerInterface $serializer, Request $request)
@@ -241,13 +247,13 @@ class RutaController extends AbstractController
                     $this->getDoctrine()->getManager()->persist($ruta);
                     $this->getDoctrine()->getManager()->flush();
                     
-                    $ruta = $serializer->serialize(
-                        $ruta,
+                    $estacion = $serializer->serialize(
+                        $estacion,
                         "json",
-                        ["groups" => ["ruta"]]
+                        ["groups" => ["estacion"]]
                     );
                     
-                    return new Response($ruta);
+                    return new Response($estacion);
                 }
 
                 if ($request->isMethod("DELETE")) {
@@ -257,21 +263,21 @@ class RutaController extends AbstractController
                     $this->getDoctrine()->getManager()->persist($ruta);
                     $this->getDoctrine()->getManager()->flush();
                     
-                    $ruta = $serializer->serialize(
-                        $ruta,
+                    $estacion = $serializer->serialize(
+                        $estacion,
                         "json",
-                        ["groups" => ["ruta"]]
+                        ["groups" => ["estacion"]]
                     );
                     
-                    return new Response($ruta);
+                    return new Response($estacion);
                 }
         
                 return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
             }
 
-            return new JsonResponse(["msg" => "Ruta no encontrada"], 404);
+            return new JsonResponse(["msg" => "Estación no encontrada"], 404);
         }
 
-        return new JsonResponse(["msg" => "Estación no encontrada"], 404);
+        return new JsonResponse(["msg" => "Ruta no encontrada"], 404);
     }
 }

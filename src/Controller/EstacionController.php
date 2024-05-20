@@ -22,7 +22,7 @@ class EstacionController extends AbstractController
             $estaciones = $serializer->serialize(
                 $estaciones,
                 "json",
-                ["groups" => ["estacion"]]
+                ["groups" => ["estacion", "ruta"]]
             );
 
             return new Response($estaciones);
@@ -44,7 +44,7 @@ class EstacionController extends AbstractController
             $estacion = $serializer->serialize(
                 $estacion, 
                 "json", 
-                ["groups" => ["estacion"]]
+                ["groups" => ["estacion", "ruta"]]
             );
             
             return new Response($estacion);
@@ -102,7 +102,7 @@ class EstacionController extends AbstractController
                 $deletedEstacion = $serializer->serialize(
                     $deletedEstacion, 
                     "json", 
-                    ["groups" => ["estacion"]]
+                    ["groups" => ["estacion", "ruta"]]
                 );
     
                 return new Response($deletedEstacion);
@@ -137,67 +137,6 @@ class EstacionController extends AbstractController
             }
 
             return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
-        }
-
-        return new JsonResponse(["msg" => "Estación no encontrada"], 404);
-    }
-
-    public function rutaEstacion(SerializerInterface $serializer, Request $request)
-    {
-        $idEstacion = $request->get("idEstacion");
-
-        $estacion = $this->getDoctrine()
-            ->getRepository(Estacion::class)
-            ->findOneBy(["id" => $idEstacion]);
-        
-        if (!empty($estacion))
-        {
-            $idRuta = $request->get("idRuta");
-
-            $ruta = $this->getDoctrine()
-                ->getRepository(Ruta::class)
-                ->findOneBy(["id" => $idRuta]);
-
-            if (!empty($ruta))
-            {
-                $rutasEstacion = $estacion->getRuta();
-
-                if ($request->isMethod("POST")) {
-                    $rutasEstacion->add($ruta);
-                    $estacion->setRuta($rutasEstacion);
-                    
-                    $this->getDoctrine()->getManager()->persist($estacion);
-                    $this->getDoctrine()->getManager()->flush();
-                    
-                    $estacion = $serializer->serialize(
-                        $estacion,
-                        "json",
-                        ["groups" => ["estacion", "ruta"]]
-                    );
-                    
-                    return new Response($estacion);
-                }
-
-                if ($request->isMethod("DELETE")) {
-                    $rutasEstacion->removeElement($ruta);
-                    $estacion->setRuta($rutasEstacion);
-                    
-                    $this->getDoctrine()->getManager()->persist($estacion);
-                    $this->getDoctrine()->getManager()->flush();
-                    
-                    $estacion = $serializer->serialize(
-                        $estacion,
-                        "json",
-                        ["groups" => ["estacion", "ruta"]]
-                    );
-                    
-                    return new Response($estacion);
-                }
-        
-                return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
-            }
-
-            return new JsonResponse(["msg" => "Ruta no encontrada"], 404);
         }
 
         return new JsonResponse(["msg" => "Estación no encontrada"], 404);
