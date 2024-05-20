@@ -74,7 +74,6 @@ class Estacion
      *
      * @ORM\ManyToMany(targetEntity="Ruta", mappedBy="estacion")
      * 
-     * @Groups("estacion")
      */
     private $ruta = array();
 

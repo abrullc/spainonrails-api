@@ -28,8 +28,6 @@ class EstacionController extends AbstractController
             return new Response($estaciones);
         }
 
-        // Faltaría asignar una ruta a la estación con findOneBy
-        // La selección de la ruta se podría hacer a través de la petición o dentro del json con los datos de la nueva estación
         if ($request->isMethod("POST")) {
             $bodyData = $request->getContent();
             $estacion = $serializer->deserialize(
@@ -44,7 +42,7 @@ class EstacionController extends AbstractController
             $estacion = $serializer->serialize(
                 $estacion, 
                 "json", 
-                ["groups" => ["estacion", "ruta"]]
+                ["groups" => ["estacion"]]
             );
             
             return new Response($estacion);
@@ -67,7 +65,7 @@ class EstacionController extends AbstractController
                 $estacion = $serializer->serialize(
                     $estacion,
                     "json",
-                    ["groups" => ["estacion", "ruta"]]
+                    ["groups" => ["estacion"]]
                 );
     
                 return new Response($estacion);
@@ -102,7 +100,7 @@ class EstacionController extends AbstractController
                 $deletedEstacion = $serializer->serialize(
                     $deletedEstacion, 
                     "json", 
-                    ["groups" => ["estacion", "ruta"]]
+                    ["groups" => ["estacion"]]
                 );
     
                 return new Response($deletedEstacion);
