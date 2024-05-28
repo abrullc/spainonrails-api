@@ -5,13 +5,15 @@ DROP SCHEMA IF EXISTS spain_on_rails;
 CREATE SCHEMA IF NOT EXISTS spain_on_rails DEFAULT CHARACTER SET utf8;
 USE spain_on_rails;
 
+
 -- -----------------------------------------------------
 -- Table "tren"
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS tren (
   id INT PRIMARY KEY AUTO_INCREMENT,
   nombre VARCHAR(45) UNIQUE NOT NULL,
-  capacidad INT NOT NULL
+  capacidad INT NOT NULL,
+  imagen VARCHAR(100)
 );
 
 
@@ -28,24 +30,40 @@ CREATE TABLE IF NOT EXISTS ruta (
   CONSTRAINT fk_ruta_tren
     FOREIGN KEY (tren_id)
     REFERENCES tren (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+    ON DELETE SET NULL
 );
+
 
 -- -----------------------------------------------------
 -- Table "estacion"
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS estacion (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  ruta_id INT NOT NULL,
   nombre VARCHAR(100) NOT NULL,
   poblacion VARCHAR(100) NOT NULL,
   direccion VARCHAR(150) NOT NULL,
   longitud FLOAT NOT NULL,
   latitud FLOAT NOT NULL,
-  CONSTRAINT fk_estacion_ruta
+  imagen VARCHAR(100)
+);
+
+
+-- -----------------------------------------------------
+-- Table "parada"
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS parada (
+  ruta_id INT NOT NULL,
+  estacion_id INT NOT NULL,
+  num_parada INT,
+  CONSTRAINT multiple_primary_key_ruta_estacion PRIMARY KEY (ruta_id, estacion_id),
+  CONSTRAINT fk_parada_ruta
     FOREIGN KEY (ruta_id)
     REFERENCES ruta (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_parada_estacion
+    FOREIGN KEY (estacion_id)
+    REFERENCES estacion (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
@@ -76,7 +94,8 @@ CREATE TABLE IF NOT EXISTS usuario (
   id INT PRIMARY KEY AUTO_INCREMENT,
   username VARCHAR(45) UNIQUE NOT NULL,
   password VARCHAR(45) NOT NULL,
-  email VARCHAR(100) NULL
+  email VARCHAR(100) NULL,
+  imagen VARCHAR(100)
 );
 
 

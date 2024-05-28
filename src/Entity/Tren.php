@@ -43,6 +43,15 @@ class Tren
     private $capacidad;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="imagen", type="string", length=100, nullable=true)
+     * 
+     * @Groups("tren")
+     */
+    private $imagen;
+
+    /**
      * Get the value of id
      */
     public function getId(): int
@@ -92,6 +101,24 @@ class Tren
     public function setCapacidad(int $capacidad): self
     {
         $this->capacidad = $capacidad;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of imagen
+     */
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    /**
+     * Set the value of imagen
+     */
+    public function setImagen(?string $imagen): self
+    {
+        $this->imagen = $imagen;
 
         return $this;
     }
