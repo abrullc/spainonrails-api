@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Estacion;
 use App\Entity\PuntoInteres;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,6 +15,7 @@ class PuntoInteresController extends AbstractController
     public function puntosInteres(SerializerInterface $serializer, Request $request)
     {
         if ($request->isMethod("GET")) {
+            $id = $request->get("idEstacion");
             $puntosInteres = $this->getDoctrine()
                 ->getRepository(PuntoInteres::class)
                 ->findAll();
@@ -21,36 +23,51 @@ class PuntoInteresController extends AbstractController
             $puntosInteres = $serializer->serialize(
                 $puntosInteres,
                 "json",
-                ["groups" => ["puntoInteres"]]
+                ["groups" => ["puntosInteresEstacion"]]
             );
 
             return new Response($puntosInteres);
         }
 
+        return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+    }
+
+    public function puntosInteresEstacion(SerializerInterface $serializer, Request $request)
+    {
+        $idEstacion = $request->get("idEstacion");
+
+        $estacion = $this->getDoctrine()
+            ->getRepository(Estacion::class)
+            ->findOneBy(["id" => $idEstacion]);
         
-        // Faltaría asignar una estación al punto de interés con findOneBy
-        // La selección de la estación se podría hacer a través de la petición
-        if ($request->isMethod("POST")) {
-            $bodyData = $request->getContent();
-            $puntoInteres = $serializer->deserialize(
-                $bodyData,
-                puntoInteres::class,
-                "json"
-            );
+        if (!empty($estacion))
+        {
+            if ($request->isMethod("POST")) {
+                $bodyData = $request->getContent();
+                $puntoInteres = $serializer->deserialize(
+                    $bodyData,
+                    puntoInteres::class,
+                    "json"
+                );
 
-            $this->getDoctrine()->getManager()->persist($puntoInteres);
-            $this->getDoctrine()->getManager()->flush();
-
-            $puntoInteres = $serializer->serialize(
-                $puntoInteres, 
-                "json", 
-                ["groups" => ["puntoInteres"]]
-            );
-            
-            return new Response($puntoInteres);
+                $puntoInteres->setEstacion($estacion);
+    
+                $this->getDoctrine()->getManager()->persist($puntoInteres);
+                $this->getDoctrine()->getManager()->flush();
+    
+                $puntoInteres = $serializer->serialize(
+                    $puntoInteres, 
+                    "json", 
+                    ["groups" => ["puntosInteresEstacion"]]
+                );
+                
+                return new Response($puntoInteres);
+            }
+    
+            return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
         }
 
-        return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+        return new JsonResponse(["msg" => "Estación no encontrada"], 404);
     }
 
     public function puntoInteres(SerializerInterface $serializer, Request $request)
@@ -65,7 +82,7 @@ class PuntoInteresController extends AbstractController
             $puntoInteres = $serializer->serialize(
                 $puntoInteres,
                 "json",
-                ["groups" => ["puntoInteres"]]
+                ["groups" => ["puntosInteresEstacion"]]
             );
 
             return new Response($puntoInteres);

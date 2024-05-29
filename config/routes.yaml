@@ -41,6 +41,11 @@ puntos_interes:
     controller: App\Controller\PuntoInteresController::puntosInteres
     methods: GET|POST
 
+punto_interes_estacion:
+    path: /puntosInteres/estacion/{idEstacion}
+    controller: App\Controller\PuntoInteresController::puntosInteresEstacion
+    methods: GET|POST
+
 punto_interes:
     path: /puntoInteres/{id}
     controller: App\Controller\PuntoInteresController::puntoInteres

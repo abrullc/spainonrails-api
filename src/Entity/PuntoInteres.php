@@ -20,7 +20,7 @@ class PuntoInteres
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * 
-     * @Groups("puntoInteres")
+     * @Groups("puntoInteres", "puntosInteresEstacion")
      */
     private $id;
 
@@ -29,7 +29,7 @@ class PuntoInteres
      *
      * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
      * 
-     * @Groups("puntoInteres")
+     * @Groups("puntoInteres", "puntosInteresEstacion")
      */
     private $nombre;
 
@@ -38,7 +38,7 @@ class PuntoInteres
      *
      * @ORM\Column(name="direccion", type="string", length=150, nullable=false)
      * 
-     * @Groups("puntoInteres")
+     * @Groups("puntoInteres", "puntosInteresEstacion")
      */
     private $direccion;
 
@@ -47,7 +47,7 @@ class PuntoInteres
      *
      * @ORM\Column(name="longitud", type="float", precision=10, scale=0, nullable=false)
      * 
-     * @Groups("puntoInteres")
+     * @Groups("puntoInteres", "puntosInteresEstacion")
      */
     private $longitud;
 
@@ -56,7 +56,7 @@ class PuntoInteres
      *
      * @ORM\Column(name="latitud", type="float", precision=10, scale=0, nullable=false)
      * 
-     * @Groups("puntoInteres")
+     * @Groups("puntoInteres", "puntosInteresEstacion")
      */
     private $latitud;
 
@@ -68,7 +68,7 @@ class PuntoInteres
      *   @ORM\JoinColumn(name="estacion_id", referencedColumnName="id")
      * })
      * 
-     * @Groups("puntoInteres")
+     * @Groups("puntosInteresEstacion")
      */
     private $estacion;
 
@@ -76,8 +76,6 @@ class PuntoInteres
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="PlanViaje", mappedBy="puntoInteres")
-     * 
-     * @Groups("puntoInteres")
      */
     private $planViaje = array();
 
