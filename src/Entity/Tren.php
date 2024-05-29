@@ -34,6 +34,15 @@ class Tren
     private $nombre;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="descripcion", type="text", length=255, nullable=true)
+     * 
+     * @Groups("tren")
+     */
+    private $descripcion;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="capacidad", type="integer", nullable=false)
@@ -83,6 +92,24 @@ class Tren
     public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of descripcion
+     */
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set the value of descripcion
+     */
+    public function setDescripcion(?string $descripcion): self
+    {
+        $this->descripcion = $descripcion;
 
         return $this;
     }

@@ -25,6 +25,15 @@ class PlanViaje
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=70, nullable=false)
+     * 
+     * @Groups("planViaje")
+     */
+    private $nombre;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="PuntoInteres", inversedBy="planViaje")
@@ -77,6 +86,24 @@ class PlanViaje
     public function setId(int $id): self
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of nombre
+     */
+    public function getNombre(): string
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set the value of nombre
+     */
+    public function setNombre(string $nombre): self
+    {
+        $this->nombre = $nombre;
 
         return $this;
     }
