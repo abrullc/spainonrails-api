@@ -36,8 +36,6 @@ class PlanViaje
      *     @ORM\JoinColumn(name="punto_interes_id", referencedColumnName="id")
      *   }
      * )
-     * 
-     * @Groups("planViaje")
      */
     private $puntoInteres = array();
 
@@ -53,8 +51,6 @@ class PlanViaje
      *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      *   }
      * )
-     * 
-     * @Groups("planViaje")
      */
     private $usuario = array();
 

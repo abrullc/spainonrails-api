@@ -99,8 +99,6 @@ class Ruta
      *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      *   }
      * )
-     * 
-     * @Groups("ruta")
      */
     private $usuario = array();
 
