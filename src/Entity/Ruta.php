@@ -231,7 +231,7 @@ class Ruta
     /**
      * Get the value of tren
      */
-    public function getTren(): Tren
+    public function getTren(): ?Tren
     {
         return $this->tren;
     }
