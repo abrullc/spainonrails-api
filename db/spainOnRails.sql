@@ -12,7 +12,7 @@ USE spain_on_rails;
 CREATE TABLE IF NOT EXISTS tren (
   id INT PRIMARY KEY AUTO_INCREMENT,
   nombre VARCHAR(45) UNIQUE NOT NULL,
-  descripcion TINYTEXT NOT NULL,
+  descripcion TEXT NOT NULL,
   capacidad INT NOT NULL,
   imagen VARCHAR(100)
 );
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS ruta (
   destino VARCHAR(45) NOT NULL,
   salida DATETIME NOT NULL,
   llegada DATETIME NOT NULL,
-  descripcion TINYTEXT NOT NULL,
+  descripcion TEXT NOT NULL,
   CONSTRAINT fk_ruta_tren
     FOREIGN KEY (tren_id)
     REFERENCES tren (id)

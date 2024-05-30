@@ -63,7 +63,7 @@ class Ruta
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="text", length=255, nullable=false)
+     * @ORM\Column(name="descripcion", type="text", length=65535, nullable=false)
      * 
      * @Groups("ruta")
      */
