@@ -61,16 +61,16 @@ class Ruta
     private $llegada;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="descripcion", type="text", length=255, nullable=true)
+     * @ORM\Column(name="descripcion", type="text", length=255, nullable=false)
      * 
      * @Groups("ruta")
      */
     private $descripcion;
 
     /**
-     * @var Tren
+     * @var Tren|null
      *
      * @ORM\ManyToOne(targetEntity="Tren")
      * @ORM\JoinColumns({
@@ -213,7 +213,7 @@ class Ruta
     /**
      * Get the value of descripcion
      */
-    public function getDescripcion(): ?string
+    public function getDescripcion(): string
     {
         return $this->descripcion;
     }
@@ -221,7 +221,7 @@ class Ruta
     /**
      * Set the value of descripcion
      */
-    public function setDescripcion(?string $descripcion): self
+    public function setDescripcion(string $descripcion): self
     {
         $this->descripcion = $descripcion;
 
@@ -239,7 +239,7 @@ class Ruta
     /**
      * Set the value of tren
      */
-    public function setTren(Tren $tren): self
+    public function setTren(?Tren $tren): self
     {
         $this->tren = $tren;
 

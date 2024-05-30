@@ -34,9 +34,9 @@ class Tren
     private $nombre;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="descripcion", type="text", length=255, nullable=true)
+     * @ORM\Column(name="descripcion", type="text", length=255, nullable=false)
      * 
      * @Groups("tren")
      */
@@ -99,7 +99,7 @@ class Tren
     /**
      * Get the value of descripcion
      */
-    public function getDescripcion(): ?string
+    public function getDescripcion(): string
     {
         return $this->descripcion;
     }
@@ -107,7 +107,7 @@ class Tren
     /**
      * Set the value of descripcion
      */
-    public function setDescripcion(?string $descripcion): self
+    public function setDescripcion(string $descripcion): self
     {
         $this->descripcion = $descripcion;
 
