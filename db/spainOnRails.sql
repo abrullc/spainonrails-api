@@ -26,8 +26,6 @@ CREATE TABLE IF NOT EXISTS ruta (
   tren_id INT,
   origen VARCHAR(45) NOT NULL,
   destino VARCHAR(45) NOT NULL,
-  salida DATETIME NOT NULL,
-  llegada DATETIME NOT NULL,
   descripcion TEXT NOT NULL,
   CONSTRAINT fk_ruta_tren
     FOREIGN KEY (tren_id)
@@ -56,7 +54,6 @@ CREATE TABLE IF NOT EXISTS estacion (
 CREATE TABLE IF NOT EXISTS parada (
   ruta_id INT NOT NULL,
   estacion_id INT NOT NULL,
-  num_parada INT NOT NULL,
   CONSTRAINT multiple_primary_key_ruta_estacion PRIMARY KEY (ruta_id, estacion_id),
   CONSTRAINT fk_parada_ruta
     FOREIGN KEY (ruta_id)
@@ -81,6 +78,7 @@ CREATE TABLE IF NOT EXISTS punto_interes (
   direccion VARCHAR(150) NOT NULL,
   longitud FLOAT NOT NULL,
   latitud FLOAT NOT NULL,
+  imagen VARCHAR(100),
   CONSTRAINT fk_punto_interes_estacion
     FOREIGN KEY (estacion_id)
     REFERENCES estacion (id)
@@ -114,12 +112,13 @@ CREATE TABLE IF NOT EXISTS plan_viaje (
 -- Table "pasaje"
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS pasaje (
+  id INT PRIMARY KEY AUTO_INCREMENT,
   ruta_id INT NOT NULL,
   usuario_id INT NOT NULL,
-  fecha DATETIME NOT NULL,
+  salida DATETIME NOT NULL,
+  llegada DATETIME NOT NULL,
   precio FLOAT NOT NULL,
   habitacion VARCHAR(20) NOT NULL,
-  CONSTRAINT multiple_primary_key_pasaje PRIMARY KEY (ruta_id, usuario_id),
   CONSTRAINT fk_ruta_pasaje
     FOREIGN KEY (ruta_id)
     REFERENCES ruta (id)
@@ -154,9 +153,9 @@ CREATE TABLE IF NOT EXISTS plan_viaje_usuario (
 
 
 -- -----------------------------------------------------
--- Table "plan_viaje_punto_interes"
+-- Table "visita"
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS plan_viaje_punto_interes (
+CREATE TABLE IF NOT EXISTS visita (
   plan_viaje_id INT NOT NULL,
   punto_interes_id INT NOT NULL,
   fecha DATETIME NOT NULL,

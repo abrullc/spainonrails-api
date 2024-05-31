@@ -63,18 +63,7 @@ class Usuario
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Ruta", mappedBy="usuario")
-     * 
-     * @Groups("usuario")
-     */
-    private $ruta = array();
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
      * @ORM\ManyToMany(targetEntity="PlanViaje", mappedBy="usuario")
-     * 
-     * @Groups("usuario")
      */
     private $planViaje = array();
 
@@ -83,7 +72,6 @@ class Usuario
      */
     public function __construct()
     {
-        $this->ruta = new \Doctrine\Common\Collections\ArrayCollection();
         $this->planViaje = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -173,24 +161,6 @@ class Usuario
     public function setImagen(?string $imagen): self
     {
         $this->imagen = $imagen;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of ruta
-     */
-    public function getRuta(): \Doctrine\Common\Collections\Collection
-    {
-        return $this->ruta;
-    }
-
-    /**
-     * Set the value of ruta
-     */
-    public function setRuta(\Doctrine\Common\Collections\Collection $ruta): self
-    {
-        $this->ruta = $ruta;
 
         return $this;
     }

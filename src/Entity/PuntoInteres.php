@@ -61,6 +61,15 @@ class PuntoInteres
     private $latitud;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="imagen", type="string", length=100, nullable=true)
+     * 
+     * @Groups("puntoInteres", "puntosInteresEstacion")
+     */
+    private $imagen;
+
+    /**
      * @var Estacion
      *
      * @ORM\ManyToOne(targetEntity="Estacion")
@@ -173,6 +182,24 @@ class PuntoInteres
     public function setLatitud(float $latitud): self
     {
         $this->latitud = $latitud;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of imagen
+     */
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    /**
+     * Set the value of imagen
+     */
+    public function setImagen(?string $imagen): self
+    {
+        $this->imagen = $imagen;
 
         return $this;
     }

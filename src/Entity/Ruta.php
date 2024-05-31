@@ -43,24 +43,6 @@ class Ruta
     private $destino;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="salida", type="datetime", nullable=false)
-     * 
-     * @Groups("ruta")
-     */
-    private $salida;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="llegada", type="datetime", nullable=false)
-     * 
-     * @Groups("ruta")
-     */
-    private $llegada;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="descripcion", type="text", length=65535, nullable=false)
@@ -97,27 +79,11 @@ class Ruta
     private $estacion = array();
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="ruta")
-     * @ORM\JoinTable(name="pasaje",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="ruta_id", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $usuario = array();
-
-    /**
      * Constructor
      */
     public function __construct()
     {
         $this->estacion = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -175,42 +141,6 @@ class Ruta
     }
 
     /**
-     * Get the value of salida
-     */
-    public function getSalida(): \DateTime
-    {
-        return $this->salida;
-    }
-
-    /**
-     * Set the value of salida
-     */
-    public function setSalida(\DateTime $salida): self
-    {
-        $this->salida = $salida;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of llegada
-     */
-    public function getLlegada(): \DateTime
-    {
-        return $this->llegada;
-    }
-
-    /**
-     * Set the value of llegada
-     */
-    public function setLlegada(\DateTime $llegada): self
-    {
-        $this->llegada = $llegada;
-
-        return $this;
-    }
-
-    /**
      * Get the value of descripcion
      */
     public function getDescripcion(): string
@@ -260,24 +190,6 @@ class Ruta
     public function setEstacion(\Doctrine\Common\Collections\Collection $estacion): self
     {
         $this->estacion = $estacion;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of usuario
-     */
-    public function getUsuario(): \Doctrine\Common\Collections\Collection
-    {
-        return $this->usuario;
-    }
-
-    /**
-     * Set the value of usuario
-     */
-    public function setUsuario(\Doctrine\Common\Collections\Collection $usuario): self
-    {
-        $this->usuario = $usuario;
 
         return $this;
     }

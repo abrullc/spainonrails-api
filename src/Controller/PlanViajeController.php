@@ -73,7 +73,7 @@ class PlanViajeController extends AbstractController
                 $bodyData = $request->getContent();
                 $planViaje = $serializer->deserialize(
                     $bodyData,
-                    planViaje::class,
+                    PlanViaje::class,
                     "json",
                     ["object_to_populate" => $planViaje]
                 );

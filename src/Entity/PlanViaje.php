@@ -36,21 +36,6 @@ class PlanViaje
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="PuntoInteres", inversedBy="planViaje")
-     * @ORM\JoinTable(name="plan_viaje_punto_interes",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="plan_viaje_id", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="punto_interes_id", referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $puntoInteres = array();
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
      * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="planViaje")
      * @ORM\JoinTable(name="plan_viaje_usuario",
      *   joinColumns={
@@ -64,12 +49,27 @@ class PlanViaje
     private $usuario = array();
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="PuntoInteres", inversedBy="planViaje")
+     * @ORM\JoinTable(name="visita",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="plan_viaje_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="punto_interes_id", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $puntoInteres = array();
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->puntoInteres = new \Doctrine\Common\Collections\ArrayCollection();
         $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->puntoInteres = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -109,24 +109,6 @@ class PlanViaje
     }
 
     /**
-     * Get the value of puntoInteres
-     */
-    public function getPuntoInteres(): \Doctrine\Common\Collections\Collection
-    {
-        return $this->puntoInteres;
-    }
-
-    /**
-     * Set the value of puntoInteres
-     */
-    public function setPuntoInteres(\Doctrine\Common\Collections\Collection $puntoInteres): self
-    {
-        $this->puntoInteres = $puntoInteres;
-
-        return $this;
-    }
-
-    /**
      * Get the value of usuario
      */
     public function getUsuario(): \Doctrine\Common\Collections\Collection
@@ -140,6 +122,24 @@ class PlanViaje
     public function setUsuario(\Doctrine\Common\Collections\Collection $usuario): self
     {
         $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of puntoInteres
+     */
+    public function getPuntoInteres(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->puntoInteres;
+    }
+
+    /**
+     * Set the value of puntoInteres
+     */
+    public function setPuntoInteres(\Doctrine\Common\Collections\Collection $puntoInteres): self
+    {
+        $this->puntoInteres = $puntoInteres;
 
         return $this;
     }
