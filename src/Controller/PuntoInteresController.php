@@ -14,8 +14,8 @@ class PuntoInteresController extends AbstractController
 {
     public function puntosInteres(SerializerInterface $serializer, Request $request)
     {
-        if ($request->isMethod("GET")) {
-            $id = $request->get("idEstacion");
+        if ($request->isMethod("GET"))
+        {
             $puntosInteres = $this->getDoctrine()
                 ->getRepository(PuntoInteres::class)
                 ->findAll();
@@ -23,7 +23,7 @@ class PuntoInteresController extends AbstractController
             $puntosInteres = $serializer->serialize(
                 $puntosInteres,
                 "json",
-                ["groups" => ["puntosInteresEstacion"]]
+                ["groups" => ["puntosInteresEstacion", "estacion"]]
             );
 
             return new Response($puntosInteres);
@@ -42,7 +42,23 @@ class PuntoInteresController extends AbstractController
         
         if (!empty($estacion))
         {
-            if ($request->isMethod("POST")) {
+            if ($request->isMethod("GET"))
+            {
+                $puntosInteresEstacion = $this->getDoctrine()
+                    ->getRepository(PuntoInteres::class)
+                    ->findBy(["estacion" => $estacion]);
+                
+                $puntosInteresEstacion = $serializer->serialize(
+                    $puntosInteresEstacion, 
+                    "json", 
+                    ["groups" => ["puntoInteres"]]
+                );
+                
+                return new Response($puntosInteresEstacion);
+            }
+            
+            if ($request->isMethod("POST"))
+            {
                 $bodyData = $request->getContent();
                 $puntoInteres = $serializer->deserialize(
                     $bodyData,
@@ -58,7 +74,7 @@ class PuntoInteresController extends AbstractController
                 $puntoInteres = $serializer->serialize(
                     $puntoInteres, 
                     "json", 
-                    ["groups" => ["puntosInteresEstacion"]]
+                    ["groups" => ["puntosInteresEstacion", "estacion"]]
                 );
                 
                 return new Response($puntoInteres);
@@ -82,7 +98,7 @@ class PuntoInteresController extends AbstractController
             $puntoInteres = $serializer->serialize(
                 $puntoInteres,
                 "json",
-                ["groups" => ["puntosInteresEstacion"]]
+                ["groups" => ["puntosInteresEstacion", "estacion"]]
             );
 
             return new Response($puntoInteres);
