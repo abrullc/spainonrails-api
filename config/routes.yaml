@@ -45,6 +45,11 @@ add_punto_interes_plan_viaje:
     controller: App\Controller\PlanViajeController::addPuntoInteresPlanViaje
     methods: POST|DELETE
 
+planes_viaje_usuario:
+    path: /planesViaje/usuario/{id}
+    controller: App\Controller\PlanViajeController::planesViajeUsuario
+    methods: GET|POST
+
 # PUNTOS DE INTERÉS
 puntos_interes:
     path: /puntosInteres

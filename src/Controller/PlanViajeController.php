@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PlanViaje;
 use App\Entity\PuntoInteres;
+use App\Entity\Usuario;
 use App\Entity\Visita;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -217,5 +218,59 @@ class PlanViajeController extends AbstractController
         }
 
         return new JsonResponse(["msg" => "Plan de viaje no encontrado"], 404);
+    }
+
+    public function planesViajeUsuario(SerializerInterface $serializer, Request $request)
+    {
+        $id = $request->get("id");
+
+        $usuario = $this->getDoctrine()
+            ->getRepository(Usuario::class)
+            ->findOneBy(["id" => $id]);
+        
+        if (!empty($usuario))
+        {
+            if ($request->isMethod("GET"))
+            {
+                $planesViajeUsuario = $usuario->getPlanViaje();
+
+                $planesViajeUsuario = $serializer->serialize(
+                    $planesViajeUsuario,
+                    "json",
+                    ["groups" => ["planViaje"]]
+                );
+
+                return new Response($planesViajeUsuario);
+            }
+
+            if ($request->isMethod("POST"))
+            {
+                $bodyData = $request->getContent();
+                $planViaje = $serializer->deserialize(
+                    $bodyData,
+                    PlanViaje::class,
+                    "json"
+                );
+
+                $usuariosPlanViaje = $planViaje->getUsuario();
+                $usuariosPlanViaje->add($usuario);
+                $planViaje->setUsuario($usuariosPlanViaje);
+
+                $this->getDoctrine()->getManager()->persist($planViaje);
+                $this->getDoctrine()->getManager()->flush();
+
+                $planViaje = $serializer->serialize(
+                    $planViaje, 
+                    "json", 
+                    ["groups" => ["planViaje"]]
+                );
+                
+                return new Response($planViaje);
+            }
+
+            return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+        }
+
+        return new JsonResponse(["msg" => "Usuario no encontrado"], 404);
     }
 }
