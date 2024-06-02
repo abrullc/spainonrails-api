@@ -32,6 +32,68 @@ class PuntoInteresController extends AbstractController
         return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
     }
 
+    public function puntoInteres(SerializerInterface $serializer, Request $request)
+    {
+        $id = $request->get("id");
+
+        $puntoInteres = $this->getDoctrine()
+            ->getRepository(PuntoInteres::class)
+            ->findOneBy(["id" => $id]);
+        
+        if (!empty($puntoInteres))
+        {
+            if ($request->isMethod("GET")) {
+                $puntoInteres = $serializer->serialize(
+                    $puntoInteres,
+                    "json",
+                    ["groups" => ["puntosInteresEstacion", "estacion"]]
+                );
+    
+                return new Response($puntoInteres);
+            }
+    
+            if ($request->isMethod("PUT"))
+            {
+                $bodyData = $request->getContent();
+                $puntoInteres = $serializer->deserialize(
+                    $bodyData,
+                    PuntoInteres::class,
+                    "json",
+                    ["object_to_populate" => $puntoInteres]
+                );
+                
+                $this->getDoctrine()->getManager()->persist($puntoInteres);
+                $this->getDoctrine()->getManager()->flush();
+                
+                $puntoInteres = $serializer->serialize(
+                    $puntoInteres,
+                    "json",
+                    ["groups" => ["puntoInteres"]]
+                );
+    
+                return new Response($puntoInteres);
+            }
+    
+            if ($request->isMethod("DELETE")) {
+                $deletedPuntoInteres = clone $puntoInteres;
+                $this->getDoctrine()->getManager()->remove($puntoInteres);
+                $this->getDoctrine()->getManager()->flush();
+                
+                $deletedPuntoInteres = $serializer->serialize(
+                    $deletedPuntoInteres, 
+                    "json", 
+                    ["groups" => ["puntoInteres"]]
+                );
+    
+                return new Response($deletedPuntoInteres);
+            }
+    
+            return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+        }
+
+        return new JsonResponse(["msg" => "Punto de interés no encontrado"], 404);
+    }
+
     public function puntosInteresEstacion(SerializerInterface $serializer, Request $request)
     {
         $idEstacion = $request->get("idEstacion");
@@ -84,65 +146,5 @@ class PuntoInteresController extends AbstractController
         }
 
         return new JsonResponse(["msg" => "Estación no encontrada"], 404);
-    }
-
-    public function puntoInteres(SerializerInterface $serializer, Request $request)
-    {
-        $id = $request->get("id");
-
-        $puntoInteres = $this->getDoctrine()
-            ->getRepository(PuntoInteres::class)
-            ->findOneBy(["id" => $id]);
-
-        if ($request->isMethod("GET")) {
-            $puntoInteres = $serializer->serialize(
-                $puntoInteres,
-                "json",
-                ["groups" => ["puntosInteresEstacion", "estacion"]]
-            );
-
-            return new Response($puntoInteres);
-        }
-
-        if ($request->isMethod("PUT")) {
-            if (!empty($puntoInteres)) {
-                $bodyData = $request->getContent();
-                $puntoInteres = $serializer->deserialize(
-                    $bodyData,
-                    PuntoInteres::class,
-                    "json",
-                    ["object_to_populate" => $puntoInteres]
-                );
-                
-                $this->getDoctrine()->getManager()->persist($puntoInteres);
-                $this->getDoctrine()->getManager()->flush();
-
-                $puntoInteres = $serializer->serialize(
-                    $puntoInteres,
-                    "json",
-                    ["groups" => ["puntoInteres"]]
-                );
-
-            return new Response($puntoInteres);
-            }
-
-            return new JsonResponse(["msg" => "Punto de interés no encontrado"], 404);
-        }
-
-        if ($request->isMethod("DELETE")) {
-            $deletedPuntoInteres = clone $puntoInteres;
-            $this->getDoctrine()->getManager()->remove($puntoInteres);
-            $this->getDoctrine()->getManager()->flush();
-            
-            $deletedPuntoInteres = $serializer->serialize(
-                $deletedPuntoInteres, 
-                "json", 
-                ["groups" => ["puntoInteres"]]
-            );
-
-            return new Response($deletedPuntoInteres);
-        }
-
-        return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
     }
 }
