@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS punto_interes (
   CONSTRAINT fk_punto_interes_estacion
     FOREIGN KEY (estacion_id)
     REFERENCES estacion (id)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 );
 
