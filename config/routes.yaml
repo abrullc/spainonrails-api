@@ -35,21 +35,31 @@ plan_viaje:
     controller: App\Controller\PlanViajeController::planViaje
     methods: GET|PUT|DELETE
 
+plan_viaje_puntos_interes:
+    path: /planViaje/{id}/puntosInteres
+    controller: App\Controller\PlanViajeController::planViajePuntosInteres
+    methods: GET
+
+add_punto_interes_plan_viaje:
+    path: /planViaje/{idPlanViaje}/puntosInteres/{idPuntoInteres}
+    controller: App\Controller\PlanViajeController::addPuntoInteresPlanViaje
+    methods: POST|DELETE
+
 # PUNTOS DE INTERÉS
 puntos_interes:
     path: /puntosInteres
     controller: App\Controller\PuntoInteresController::puntosInteres
     methods: GET|POST
 
-punto_interes_estacion:
-    path: /puntosInteres/estacion/{idEstacion}
-    controller: App\Controller\PuntoInteresController::puntosInteresEstacion
-    methods: GET|POST
-
 punto_interes:
     path: /puntoInteres/{id}
     controller: App\Controller\PuntoInteresController::puntoInteres
     methods: GET|PUT|DELETE
+
+punto_interes_estacion:
+    path: /puntosInteres/estacion/{idEstacion}
+    controller: App\Controller\PuntoInteresController::puntosInteresEstacion
+    methods: GET|POST
 
 # RUTAS
 rutas:
