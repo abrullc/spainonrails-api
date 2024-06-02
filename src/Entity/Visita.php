@@ -18,7 +18,7 @@ class Visita
      *
      * @ORM\Column(name="fecha", type="datetime", nullable=false)
      * 
-     * @Groups("visita")
+     * @Groups("visita", "visitaPlanViaje")
      */
     private $fecha;
 
@@ -46,7 +46,7 @@ class Visita
      *   @ORM\JoinColumn(name="punto_interes_id", referencedColumnName="id")
      * })
      * 
-     * @Groups("visita")
+     * @Groups("visita", "visitaPlanViaje")
      */
     private $puntoInteres;
 
