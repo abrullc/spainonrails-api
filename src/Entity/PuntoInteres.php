@@ -82,21 +82,6 @@ class PuntoInteres
     private $estacion;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="PlanViaje", mappedBy="puntoInteres")
-     */
-    private $planViaje = array();
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->planViaje = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Get the value of id
      */
     public function getId(): int
@@ -218,24 +203,6 @@ class PuntoInteres
     public function setEstacion(Estacion $estacion): self
     {
         $this->estacion = $estacion;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of planViaje
-     */
-    public function getPlanViaje(): \Doctrine\Common\Collections\Collection
-    {
-        return $this->planViaje;
-    }
-
-    /**
-     * Set the value of planViaje
-     */
-    public function setPlanViaje(\Doctrine\Common\Collections\Collection $planViaje): self
-    {
-        $this->planViaje = $planViaje;
 
         return $this;
     }
