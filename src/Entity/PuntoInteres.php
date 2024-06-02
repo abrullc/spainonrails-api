@@ -43,6 +43,15 @@ class PuntoInteres
     private $direccion;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="text", length=65535, nullable=false)
+     * 
+     * @Groups("puntoInteres", "puntosInteresEstacion")
+     */
+    private $descripcion;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="longitud", type="float", precision=10, scale=0, nullable=false)
@@ -131,6 +140,24 @@ class PuntoInteres
     public function setDireccion(string $direccion): self
     {
         $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of descripcion
+     */
+    public function getDescripcion(): string
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set the value of descripcion
+     */
+    public function setDescripcion(string $descripcion): self
+    {
+        $this->descripcion = $descripcion;
 
         return $this;
     }

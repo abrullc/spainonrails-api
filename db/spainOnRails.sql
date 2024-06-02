@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS punto_interes (
   estacion_id INT NOT NULL,
   nombre VARCHAR(100) NOT NULL,
   direccion VARCHAR(150) NOT NULL,
+  descripcion TEXT NOT NULL,
   longitud FLOAT NOT NULL,
   latitud FLOAT NOT NULL,
   imagen VARCHAR(100),
