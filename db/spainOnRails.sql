@@ -164,11 +164,11 @@ CREATE TABLE IF NOT EXISTS visita (
   CONSTRAINT fk_plan_viaje_punto_interes_plan_viaje
     FOREIGN KEY (plan_viaje_id)
     REFERENCES plan_viaje (id)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT fk_plan_viaje_punto_interes_punto_interes
     FOREIGN KEY (punto_interes_id)
     REFERENCES punto_interes (id)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 );
