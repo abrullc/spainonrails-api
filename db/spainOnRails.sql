@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS plan_viaje (
 CREATE TABLE IF NOT EXISTS pasaje (
   id INT PRIMARY KEY AUTO_INCREMENT,
   ruta_id INT NOT NULL,
-  usuario_id INT NOT NULL,
+  usuario_id INT,
   salida DATETIME NOT NULL,
   llegada DATETIME NOT NULL,
   precio FLOAT NOT NULL,
@@ -123,12 +123,12 @@ CREATE TABLE IF NOT EXISTS pasaje (
   CONSTRAINT fk_ruta_pasaje
     FOREIGN KEY (ruta_id)
     REFERENCES ruta (id)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT fk_usuario_pasaje
     FOREIGN KEY (usuario_id)
     REFERENCES usuario (id)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION
 );
 
