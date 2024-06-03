@@ -24,6 +24,32 @@ ruta_estacion:
     controller: App\Controller\EstacionController::rutaEstacion
     methods: POST|DELETE
 
+# PASAJES
+pasajes:
+    path: /pasajes
+    controller: App\Controller\PasajeController::pasajes
+    methods: GET|POST
+
+pasaje:
+    path: /pasaje/{id}
+    controller: App\Controller\PasajeController::pasaje
+    methods: GET|PUT|DELETE
+
+pasajes_ruta:
+    path: /pasajes/ruta/{id}
+    controller: App\Controller\PasajeController::pasajesRuta
+    methods: GET|POST
+
+pasajes_usuario:
+    path: /pasajes/usuario/{id}
+    controller: App\Controller\PasajeController::pasajesUsuario
+    methods: GET
+
+add_pasaje_usuario:
+    path: /pasaje/{idPasaje}/usuario/{idUsuario}
+    controller: App\Controller\PasajeController::addPasajeUsuario
+    methods: POST
+
 # PLANES DE VIAJE
 planes_viaje:
     path: /planesViaje
