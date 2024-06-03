@@ -34,6 +34,15 @@ class Tren
     private $nombre;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="text", length=65535, nullable=false)
+     * 
+     * @Groups("tren")
+     */
+    private $descripcion;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="capacidad", type="integer", nullable=false)
@@ -41,6 +50,15 @@ class Tren
      * @Groups("tren")
      */
     private $capacidad;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="imagen", type="string", length=100, nullable=true)
+     * 
+     * @Groups("tren")
+     */
+    private $imagen;
 
     /**
      * Get the value of id
@@ -79,6 +97,24 @@ class Tren
     }
 
     /**
+     * Get the value of descripcion
+     */
+    public function getDescripcion(): string
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set the value of descripcion
+     */
+    public function setDescripcion(string $descripcion): self
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
      * Get the value of capacidad
      */
     public function getCapacidad(): int
@@ -92,6 +128,24 @@ class Tren
     public function setCapacidad(int $capacidad): self
     {
         $this->capacidad = $capacidad;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of imagen
+     */
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    /**
+     * Set the value of imagen
+     */
+    public function setImagen(?string $imagen): self
+    {
+        $this->imagen = $imagen;
 
         return $this;
     }

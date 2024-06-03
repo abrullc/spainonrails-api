@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\PlanViaje;
+use App\Entity\PuntoInteres;
+use App\Entity\Usuario;
+use App\Entity\Visita;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +16,8 @@ class PlanViajeController extends AbstractController
 {
     public function planesViaje(SerializerInterface $serializer, Request $request)
     {
-        if ($request->isMethod("GET")) {
+        if ($request->isMethod("GET"))
+        {
             $planesViaje = $this->getDoctrine()
                 ->getRepository(PlanViaje::class)
                 ->findAll();
@@ -27,7 +31,8 @@ class PlanViajeController extends AbstractController
             return new Response($planesViaje);
         }
 
-        if ($request->isMethod("POST")) {
+        if ($request->isMethod("POST"))
+        {
             $bodyData = $request->getContent();
             $planViaje = $serializer->deserialize(
                 $bodyData,
@@ -58,22 +63,25 @@ class PlanViajeController extends AbstractController
             ->getRepository(PlanViaje::class)
             ->findOneBy(["id" => $id]);
 
-        if ($request->isMethod("GET")) {
-            $planViaje = $serializer->serialize(
-                $planViaje,
-                "json",
-                ["groups" => ["planViaje"]]
-            );
+        if (!empty($planViaje))
+        {
+            if ($request->isMethod("GET"))
+            {
+                $planViaje = $serializer->serialize(
+                    $planViaje,
+                    "json",
+                    ["groups" => ["planViaje"]]
+                );
 
-            return new Response($planViaje);
-        }
+                return new Response($planViaje);
+            }
 
-        if ($request->isMethod("PUT")) {
-            if (!empty($planViaje)) {
+            if ($request->isMethod("PUT"))
+            {
                 $bodyData = $request->getContent();
                 $planViaje = $serializer->deserialize(
                     $bodyData,
-                    planViaje::class,
+                    PlanViaje::class,
                     "json",
                     ["object_to_populate" => $planViaje]
                 );
@@ -87,26 +95,182 @@ class PlanViajeController extends AbstractController
                     ["groups" => ["planViaje"]]
                 );
 
-            return new Response($planViaje);
+                return new Response($planViaje);
             }
 
-            return new JsonResponse(["msg" => "Plan de viaje no encontrado"], 404);
+            if ($request->isMethod("DELETE"))
+            {
+                $deletedPlanViaje = clone $planViaje;
+                $this->getDoctrine()->getManager()->remove($planViaje);
+                $this->getDoctrine()->getManager()->flush();
+                
+                $deletedPlanViaje = $serializer->serialize(
+                    $deletedPlanViaje, 
+                    "json", 
+                    ["groups" => ["planViaje"]]
+                );
+
+                return new Response($deletedPlanViaje);
+            }
+
+            return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
         }
 
-        if ($request->isMethod("DELETE")) {
-            $deletedPlanViaje = clone $planViaje;
-            $this->getDoctrine()->getManager()->remove($planViaje);
-            $this->getDoctrine()->getManager()->flush();
+        return new JsonResponse(["msg" => "Plan de viaje no encontrado"], 404);
+    }
+
+    public function planViajePuntosInteres(SerializerInterface $serializer, Request $request)
+    {
+        $id = $request->get("id");
+
+        $planViaje = $this->getDoctrine()
+            ->getRepository(PlanViaje::class)
+            ->findOneBy(["id" => $id]);
+        
+        if (!empty($planViaje))
+        {
+            if ($request->isMethod("GET"))
+            {
+                $visitasPlanViaje = $this->getDoctrine()
+                    ->getRepository(Visita::class)
+                    ->findBy(["planViaje" => $planViaje]);
+
+                $visitasPlanViaje = $serializer->serialize(
+                    $visitasPlanViaje,
+                    "json",
+                    ["groups" => ["visitaPlanViaje", "puntoInteres"]]
+                );
+
+                return new Response($visitasPlanViaje);
+            }
+
+            return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+        }
+
+        return new JsonResponse(["msg" => "Plan de viaje no encontrado"], 404);
+    }
+
+    public function addPuntoInteresPlanViaje(SerializerInterface $serializer, Request $request)
+    {
+        $id = $request->get("idPlanViaje");
+
+        $planViaje = $this->getDoctrine()
+            ->getRepository(PlanViaje::class)
+            ->findOneBy(["id" => $id]);
+        
+        if (!empty($planViaje))
+        {
+            $id = $request->get("idPuntoInteres");
+
+            $puntoInteres = $this->getDoctrine()
+                ->getRepository(PuntoInteres::class)
+                ->findOneBy(["id" => $id]);
             
-            $deletedPlanViaje = $serializer->serialize(
-                $deletedPlanViaje, 
-                "json", 
-                ["groups" => ["planViaje"]]
-            );
+            if (!empty($puntoInteres))
+            {
+                if ($request->isMethod("POST"))
+                {
+                    $bodyData = $request->getContent();
+                        $visitaPlanViaje = $serializer->deserialize(
+                            $bodyData,
+                            Visita::class,
+                            "json"
+                        );
+                        
+                        $visitaPlanViaje->setPlanViaje($planViaje);
+                        $visitaPlanViaje->setPuntoInteres($puntoInteres);
+                        
+                        $this->getDoctrine()->getManager()->persist($visitaPlanViaje);
+                        $this->getDoctrine()->getManager()->flush();
 
-            return new Response($deletedPlanViaje);
+                        $visitaPlanViaje = $serializer->serialize(
+                            $visitaPlanViaje,
+                            "json",
+                            ["groups" => ["visita", "planViaje", "puntoInteres"]]
+                        );
+
+                        return new Response($visitaPlanViaje);
+                }
+
+                if ($request->isMethod("DELETE"))
+                {
+                    $visita = $this->getDoctrine()
+                        ->getRepository(Visita::class)
+                        ->findOneBy(["planViaje" => $planViaje, "puntoInteres" => $puntoInteres]);
+                    
+                    $deletedVisita = clone $visita;
+                    $this->getDoctrine()->getManager()->remove($visita);
+                    $this->getDoctrine()->getManager()->flush();
+                    
+                    $deletedVisita = $serializer->serialize(
+                        $deletedVisita, 
+                        "json", 
+                        ["groups" => ["visitaPlanViaje", "puntoInteres"]]
+                    );
+
+                    return new Response($deletedVisita);
+                }
+
+                return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+            }
+
+            return new JsonResponse(["msg" => "Punto de interés no encontrado"], 404);
         }
 
-        return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+        return new JsonResponse(["msg" => "Plan de viaje no encontrado"], 404);
+    }
+
+    public function planesViajeUsuario(SerializerInterface $serializer, Request $request)
+    {
+        $id = $request->get("id");
+
+        $usuario = $this->getDoctrine()
+            ->getRepository(Usuario::class)
+            ->findOneBy(["id" => $id]);
+        
+        if (!empty($usuario))
+        {
+            if ($request->isMethod("GET"))
+            {
+                $planesViajeUsuario = $usuario->getPlanViaje();
+
+                $planesViajeUsuario = $serializer->serialize(
+                    $planesViajeUsuario,
+                    "json",
+                    ["groups" => ["planViaje"]]
+                );
+
+                return new Response($planesViajeUsuario);
+            }
+
+            if ($request->isMethod("POST"))
+            {
+                $bodyData = $request->getContent();
+                $planViaje = $serializer->deserialize(
+                    $bodyData,
+                    PlanViaje::class,
+                    "json"
+                );
+
+                $usuariosPlanViaje = $planViaje->getUsuario();
+                $usuariosPlanViaje->add($usuario);
+                $planViaje->setUsuario($usuariosPlanViaje);
+
+                $this->getDoctrine()->getManager()->persist($planViaje);
+                $this->getDoctrine()->getManager()->flush();
+
+                $planViaje = $serializer->serialize(
+                    $planViaje, 
+                    "json", 
+                    ["groups" => ["planViaje"]]
+                );
+                
+                return new Response($planViaje);
+            }
+
+            return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+        }
+
+        return new JsonResponse(["msg" => "Usuario no encontrado"], 404);
     }
 }

@@ -57,19 +57,20 @@ class UsuarioController extends AbstractController
         $usuario = $this->getDoctrine()
             ->getRepository(Usuario::class)
             ->findOneBy(["id" => $id]);
-
-        if ($request->isMethod("GET")) {
-            $usuario = $serializer->serialize(
-                $usuario,
-                "json",
-                ["groups" => ["usuario"]]
-            );
-
-            return new Response($usuario);
-        }
-
-        if ($request->isMethod("PUT")) {
-            if (!empty($usuario)) {
+        
+        if (!empty($usuario))
+        {
+            if ($request->isMethod("GET")) {
+                $usuario = $serializer->serialize(
+                    $usuario,
+                    "json",
+                    ["groups" => ["usuario"]]
+                );
+    
+                return new Response($usuario);
+            }
+    
+            if ($request->isMethod("PUT")) {
                 $bodyData = $request->getContent();
                 $usuario = $serializer->deserialize(
                     $bodyData,
@@ -77,36 +78,36 @@ class UsuarioController extends AbstractController
                     "json",
                     ["object_to_populate" => $usuario]
                 );
-                
+                    
                 $this->getDoctrine()->getManager()->persist($usuario);
                 $this->getDoctrine()->getManager()->flush();
-
+    
                 $usuario = $serializer->serialize(
                     $usuario,
                     "json",
                     ["groups" => ["usuario"]]
                 );
-
-            return new Response($usuario);
+    
+                return new Response($usuario);
             }
-
-            return new JsonResponse(["msg" => "Usuario no encontrado"], 404);
+    
+            if ($request->isMethod("DELETE")) {
+                $deletedUsuario = clone $usuario;
+                $this->getDoctrine()->getManager()->remove($usuario);
+                $this->getDoctrine()->getManager()->flush();
+                
+                $deletedUsuario = $serializer->serialize(
+                    $deletedUsuario, 
+                    "json", 
+                    ["groups" => ["usuario"]]
+                );
+    
+                return new Response($deletedUsuario);
+            }
+    
+            return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
         }
 
-        if ($request->isMethod("DELETE")) {
-            $deletedUsuario = clone $usuario;
-            $this->getDoctrine()->getManager()->remove($usuario);
-            $this->getDoctrine()->getManager()->flush();
-            
-            $deletedUsuario = $serializer->serialize(
-                $deletedUsuario, 
-                "json", 
-                ["groups" => ["usuario"]]
-            );
-
-            return new Response($deletedUsuario);
-        }
-
-        return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+        return new JsonResponse(["msg" => "Usuario no encontrado"], 404);
     }
 }

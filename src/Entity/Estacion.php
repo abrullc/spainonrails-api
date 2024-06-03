@@ -70,10 +70,18 @@ class Estacion
     private $latitud;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="imagen", type="string", length=100, nullable=true)
+     * 
+     * @Groups("estacion")
+     */
+    private $imagen;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Ruta", mappedBy="estacion")
-     * 
      */
     private $ruta = array();
 
@@ -189,6 +197,24 @@ class Estacion
     public function setLatitud(float $latitud): self
     {
         $this->latitud = $latitud;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of imagen
+     */
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    /**
+     * Set the value of imagen
+     */
+    public function setImagen(?string $imagen): self
+    {
+        $this->imagen = $imagen;
 
         return $this;
     }

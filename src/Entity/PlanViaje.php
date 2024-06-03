@@ -25,21 +25,13 @@ class PlanViaje
     private $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var string
      *
-     * @ORM\ManyToMany(targetEntity="PuntoInteres", inversedBy="planViaje")
-     * @ORM\JoinTable(name="plan_viaje_punto_interes",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="plan_viaje_id", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="punto_interes_id", referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\Column(name="nombre", type="string", length=70, nullable=false)
      * 
      * @Groups("planViaje")
      */
-    private $puntoInteres = array();
+    private $nombre;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -53,8 +45,6 @@ class PlanViaje
      *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      *   }
      * )
-     * 
-     * @Groups("planViaje")
      */
     private $usuario = array();
 
@@ -63,7 +53,6 @@ class PlanViaje
      */
     public function __construct()
     {
-        $this->puntoInteres = new \Doctrine\Common\Collections\ArrayCollection();
         $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -86,19 +75,19 @@ class PlanViaje
     }
 
     /**
-     * Get the value of puntoInteres
+     * Get the value of nombre
      */
-    public function getPuntoInteres(): \Doctrine\Common\Collections\Collection
+    public function getNombre(): string
     {
-        return $this->puntoInteres;
+        return $this->nombre;
     }
 
     /**
-     * Set the value of puntoInteres
+     * Set the value of nombre
      */
-    public function setPuntoInteres(\Doctrine\Common\Collections\Collection $puntoInteres): self
+    public function setNombre(string $nombre): self
     {
-        $this->puntoInteres = $puntoInteres;
+        $this->nombre = $nombre;
 
         return $this;
     }

@@ -120,34 +120,39 @@ class RutaController extends AbstractController
             ->getRepository(Ruta::class)
             ->findOneBy(["id" => $id]);
         
-        $trenRuta = $ruta->getTren();
+        if (!empty($ruta))
+        {
+            $trenRuta = $ruta->getTren();
 
-        if ($request->isMethod("GET")) {
-            $trenRuta = $serializer->serialize(
-                $trenRuta,
-                "json",
-                ["groups" => ["tren"]]
-            );
+            if ($request->isMethod("GET")) {
+                $trenRuta = $serializer->serialize(
+                    $trenRuta,
+                    "json",
+                    ["groups" => ["tren"]]
+                );
 
-            return new Response($trenRuta);
+                return new Response($trenRuta);
+            }
+
+            if ($request->isMethod("DELETE")) {
+                $ruta->setTren(null);
+
+                $this->getDoctrine()->getManager()->persist($ruta);
+                $this->getDoctrine()->getManager()->flush();
+
+                $ruta = $serializer->serialize(
+                    $ruta,
+                    "json",
+                    ["groups" => ["ruta", "tren"]]
+                );
+
+                return new Response($ruta);
+            }
+
+            return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
         }
 
-        if ($request->isMethod("DELETE")) {
-            $ruta->setTren(null);
-
-            $this->getDoctrine()->getManager()->persist($ruta);
-            $this->getDoctrine()->getManager()->flush();
-
-            $ruta = $serializer->serialize(
-                $ruta,
-                "json",
-                ["groups" => ["ruta", "tren"]]
-            );
-
-            return new Response($ruta);
-        }
-
-        return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+        return new JsonResponse(["msg" => "Ruta no encontrada"], 404);
     }
 
     public function addTrenRuta(SerializerInterface $serializer, Request $request)

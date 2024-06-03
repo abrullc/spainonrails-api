@@ -20,7 +20,7 @@ class Ruta
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * 
-     * @Groups("ruta")
+     * @Groups("ruta", "rutaPasaje")
      */
     private $id;
 
@@ -29,7 +29,7 @@ class Ruta
      *
      * @ORM\Column(name="origen", type="string", length=45, nullable=false)
      * 
-     * @Groups("ruta")
+     * @Groups("ruta", "rutaPasaje")
      */
     private $origen;
 
@@ -38,30 +38,21 @@ class Ruta
      *
      * @ORM\Column(name="destino", type="string", length=45, nullable=false)
      * 
-     * @Groups("ruta")
+     * @Groups("ruta", "rutaPasaje")
      */
     private $destino;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="salida", type="datetime", nullable=false)
+     * @ORM\Column(name="descripcion", type="text", length=65535, nullable=false)
      * 
-     * @Groups("ruta")
+     * @Groups("ruta", "rutaPasaje")
      */
-    private $salida;
+    private $descripcion;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="llegada", type="datetime", nullable=false)
-     * 
-     * @Groups("ruta")
-     */
-    private $llegada;
-
-    /**
-     * @var Tren
+     * @var Tren|null
      *
      * @ORM\ManyToOne(targetEntity="Tren")
      * @ORM\JoinColumns({
@@ -88,29 +79,11 @@ class Ruta
     private $estacion = array();
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="ruta")
-     * @ORM\JoinTable(name="pasaje",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="ruta_id", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
-     *   }
-     * )
-     * 
-     * @Groups("ruta")
-     */
-    private $usuario = array();
-
-    /**
      * Constructor
      */
     public function __construct()
     {
         $this->estacion = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -168,37 +141,19 @@ class Ruta
     }
 
     /**
-     * Get the value of salida
+     * Get the value of descripcion
      */
-    public function getSalida(): \DateTime
+    public function getDescripcion(): string
     {
-        return $this->salida;
+        return $this->descripcion;
     }
 
     /**
-     * Set the value of salida
+     * Set the value of descripcion
      */
-    public function setSalida(\DateTime $salida): self
+    public function setDescripcion(string $descripcion): self
     {
-        $this->salida = $salida;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of llegada
-     */
-    public function getLlegada(): \DateTime
-    {
-        return $this->llegada;
-    }
-
-    /**
-     * Set the value of llegada
-     */
-    public function setLlegada(\DateTime $llegada): self
-    {
-        $this->llegada = $llegada;
+        $this->descripcion = $descripcion;
 
         return $this;
     }
@@ -206,7 +161,7 @@ class Ruta
     /**
      * Get the value of tren
      */
-    public function getTren(): Tren | null
+    public function getTren(): ?Tren
     {
         return $this->tren;
     }
@@ -214,7 +169,7 @@ class Ruta
     /**
      * Set the value of tren
      */
-    public function setTren(Tren | null $tren): self
+    public function setTren(?Tren $tren): self
     {
         $this->tren = $tren;
 
@@ -235,24 +190,6 @@ class Ruta
     public function setEstacion(\Doctrine\Common\Collections\Collection $estacion): self
     {
         $this->estacion = $estacion;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of usuario
-     */
-    public function getUsuario(): \Doctrine\Common\Collections\Collection
-    {
-        return $this->usuario;
-    }
-
-    /**
-     * Set the value of usuario
-     */
-    public function setUsuario(\Doctrine\Common\Collections\Collection $usuario): self
-    {
-        $this->usuario = $usuario;
 
         return $this;
     }

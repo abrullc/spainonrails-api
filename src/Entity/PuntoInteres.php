@@ -20,7 +20,7 @@ class PuntoInteres
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * 
-     * @Groups("puntoInteres")
+     * @Groups("puntoInteres", "puntosInteresEstacion")
      */
     private $id;
 
@@ -29,7 +29,7 @@ class PuntoInteres
      *
      * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
      * 
-     * @Groups("puntoInteres")
+     * @Groups("puntoInteres", "puntosInteresEstacion")
      */
     private $nombre;
 
@@ -38,16 +38,25 @@ class PuntoInteres
      *
      * @ORM\Column(name="direccion", type="string", length=150, nullable=false)
      * 
-     * @Groups("puntoInteres")
+     * @Groups("puntoInteres", "puntosInteresEstacion")
      */
     private $direccion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="text", length=65535, nullable=false)
+     * 
+     * @Groups("puntoInteres", "puntosInteresEstacion")
+     */
+    private $descripcion;
 
     /**
      * @var float
      *
      * @ORM\Column(name="longitud", type="float", precision=10, scale=0, nullable=false)
      * 
-     * @Groups("puntoInteres")
+     * @Groups("puntoInteres", "puntosInteresEstacion")
      */
     private $longitud;
 
@@ -56,9 +65,18 @@ class PuntoInteres
      *
      * @ORM\Column(name="latitud", type="float", precision=10, scale=0, nullable=false)
      * 
-     * @Groups("puntoInteres")
+     * @Groups("puntoInteres", "puntosInteresEstacion")
      */
     private $latitud;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="imagen", type="string", length=100, nullable=true)
+     * 
+     * @Groups("puntoInteres", "puntosInteresEstacion")
+     */
+    private $imagen;
 
     /**
      * @var Estacion
@@ -68,26 +86,9 @@ class PuntoInteres
      *   @ORM\JoinColumn(name="estacion_id", referencedColumnName="id")
      * })
      * 
-     * @Groups("puntoInteres")
+     * @Groups("puntosInteresEstacion")
      */
     private $estacion;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="PlanViaje", mappedBy="puntoInteres")
-     * 
-     * @Groups("puntoInteres")
-     */
-    private $planViaje = array();
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->planViaje = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get the value of id
@@ -144,6 +145,24 @@ class PuntoInteres
     }
 
     /**
+     * Get the value of descripcion
+     */
+    public function getDescripcion(): string
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set the value of descripcion
+     */
+    public function setDescripcion(string $descripcion): self
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
      * Get the value of longitud
      */
     public function getLongitud(): float
@@ -180,6 +199,24 @@ class PuntoInteres
     }
 
     /**
+     * Get the value of imagen
+     */
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    /**
+     * Set the value of imagen
+     */
+    public function setImagen(?string $imagen): self
+    {
+        $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    /**
      * Get the value of estacion
      */
     public function getEstacion(): Estacion
@@ -193,24 +230,6 @@ class PuntoInteres
     public function setEstacion(Estacion $estacion): self
     {
         $this->estacion = $estacion;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of planViaje
-     */
-    public function getPlanViaje(): \Doctrine\Common\Collections\Collection
-    {
-        return $this->planViaje;
-    }
-
-    /**
-     * Set the value of planViaje
-     */
-    public function setPlanViaje(\Doctrine\Common\Collections\Collection $planViaje): self
-    {
-        $this->planViaje = $planViaje;
 
         return $this;
     }
