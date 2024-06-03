@@ -73,7 +73,7 @@ class Pasaje
     private $ruta;
 
     /**
-     * @var Usuario
+     * @var Usuario|null
      *
      * @ORM\ManyToOne(targetEntity="Usuario")
      * @ORM\JoinColumns({
@@ -195,7 +195,7 @@ class Pasaje
     /**
      * Get the value of usuario
      */
-    public function getUsuario(): Usuario
+    public function getUsuario(): ?Usuario
     {
         return $this->usuario;
     }
@@ -203,7 +203,7 @@ class Pasaje
     /**
      * Set the value of usuario
      */
-    public function setUsuario(Usuario $usuario): self
+    public function setUsuario(?Usuario $usuario): self
     {
         $this->usuario = $usuario;
 
