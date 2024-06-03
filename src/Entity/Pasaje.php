@@ -20,7 +20,7 @@ class Pasaje
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * 
-     * @Groups("pasaje")
+     * @Groups("pasaje", "pasajeRuta", "pasajeUsuario")
      */
     private $id;
 
@@ -29,7 +29,7 @@ class Pasaje
      *
      * @ORM\Column(name="salida", type="datetime", nullable=false)
      * 
-     * @Groups("pasaje")
+     * @Groups("pasaje", "pasajeRuta", "pasajeUsuario")
      */
     private $salida;
 
@@ -38,7 +38,7 @@ class Pasaje
      *
      * @ORM\Column(name="llegada", type="datetime", nullable=false)
      * 
-     * @Groups("pasaje")
+     * @Groups("pasaje", "pasajeRuta", "pasajeUsuario")
      */
     private $llegada;
 
@@ -47,7 +47,7 @@ class Pasaje
      *
      * @ORM\Column(name="precio", type="float", precision=10, scale=0, nullable=false)
      * 
-     * @Groups("pasaje")
+     * @Groups("pasaje", "pasajeRuta", "pasajeUsuario")
      */
     private $precio;
 
@@ -56,7 +56,7 @@ class Pasaje
      *
      * @ORM\Column(name="habitacion", type="string", length=20, nullable=false)
      * 
-     * @Groups("pasaje")
+     * @Groups("pasaje", "pasajeRuta", "pasajeUsuario")
      */
     private $habitacion;
 
@@ -68,7 +68,7 @@ class Pasaje
      *   @ORM\JoinColumn(name="ruta_id", referencedColumnName="id")
      * })
      * 
-     * @Groups("pasaje")
+     * @Groups("pasaje", "pasajeUsuario")
      */
     private $ruta;
 
@@ -80,7 +80,7 @@ class Pasaje
      *   @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      * })
      * 
-     * @Groups("pasaje")
+     * @Groups("pasaje", "pasajeRuta")
      */
     private $usuario;
 
