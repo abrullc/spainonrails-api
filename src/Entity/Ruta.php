@@ -20,7 +20,7 @@ class Ruta
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * 
-     * @Groups("ruta")
+     * @Groups("ruta", "rutaPasaje")
      */
     private $id;
 
@@ -29,7 +29,7 @@ class Ruta
      *
      * @ORM\Column(name="origen", type="string", length=45, nullable=false)
      * 
-     * @Groups("ruta")
+     * @Groups("ruta", "rutaPasaje")
      */
     private $origen;
 
@@ -38,7 +38,7 @@ class Ruta
      *
      * @ORM\Column(name="destino", type="string", length=45, nullable=false)
      * 
-     * @Groups("ruta")
+     * @Groups("ruta", "rutaPasaje")
      */
     private $destino;
 
@@ -47,7 +47,7 @@ class Ruta
      *
      * @ORM\Column(name="descripcion", type="text", length=65535, nullable=false)
      * 
-     * @Groups("ruta")
+     * @Groups("ruta", "rutaPasaje")
      */
     private $descripcion;
 
