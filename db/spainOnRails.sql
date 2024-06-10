@@ -2,7 +2,7 @@
 -- Schema "spain_on_rails"
 -- -----------------------------------------------------
 DROP SCHEMA IF EXISTS spain_on_rails;
-CREATE SCHEMA IF NOT EXISTS spain_on_rails DEFAULT CHARACTER SET utf8;
+CREATE SCHEMA IF NOT EXISTS spain_on_rails DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 USE spain_on_rails;
 
 
