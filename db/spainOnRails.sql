@@ -42,8 +42,8 @@ CREATE TABLE IF NOT EXISTS estacion (
   nombre VARCHAR(100) NOT NULL,
   poblacion VARCHAR(100) NOT NULL,
   direccion VARCHAR(150) NOT NULL,
-  longitud FLOAT NOT NULL,
   latitud FLOAT NOT NULL,
+  longitud FLOAT NOT NULL,
   imagen VARCHAR(100)
 );
 
@@ -77,8 +77,8 @@ CREATE TABLE IF NOT EXISTS punto_interes (
   nombre VARCHAR(100) NOT NULL,
   direccion VARCHAR(150) NOT NULL,
   descripcion TEXT NOT NULL,
-  longitud FLOAT NOT NULL,
   latitud FLOAT NOT NULL,
+  longitud FLOAT NOT NULL,
   imagen VARCHAR(100),
   CONSTRAINT fk_punto_interes_estacion
     FOREIGN KEY (estacion_id)
@@ -222,7 +222,7 @@ Día 6: Cabezón de La Sal – Santander
 Día 7: Santander - Carranza
 Día 8: Carranza - San Sebastián");
 
-INSERT INTO estacion (nombre, poblacion, direccion, longitud, latitud)
+INSERT INTO estacion (nombre, poblacion, direccion, latitud, longitud)
 VALUES
 /*1*/("San Sebastián", "San Sebastián", "De Francia Ibilbidea, 22, 20012 Donostia, Gipuzkoa", 43.317672075902976, -1.9767051319885167),
 /*2*/("Carranza", "Ambasaguas", "48890 Ambasaguas, Vizcaya", 43.23893883331732, -3.3579304449974674),
@@ -296,7 +296,7 @@ VALUES
 (6, 2),
 (6, 1);
 
-INSERT INTO punto_interes (estacion_id, nombre, direccion, descripcion, longitud, latitud)
+INSERT INTO punto_interes (estacion_id, nombre, direccion, descripcion, latitud, longitud)
 VALUES
 (26, "Ciutat de les Arts i les Ciències", "Quatre Carreres, 46013 Valencia", "Obra del arquitecto valenciano Santiago Calatrava, tiene varios edificios que se han convertido en iconos de la ciudad. Se trata de un complejo de ocio científico y cultural para disfrutar en familia o con amigos que hoy en día ocupa alrededor de dos kilómetros del antiguo cauce del río Turia.
 Necesitarás entradas para poder acceder al interior del Hemisfèric, el Museu de les Ciències  y Oceanogràfic y puedes comprarlas por separado o conjuntas, de los edificios que más te interese visitar.", 39.45487252369318, -0.35049511511959186),
