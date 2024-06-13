@@ -22,7 +22,7 @@ class EstacionController extends AbstractController
             $estaciones = $serializer->serialize(
                 $estaciones,
                 "json",
-                ["groups" => ["estacion", "ruta"]]
+                ["groups" => ["estacion"]]
             );
 
             return new Response($estaciones);
@@ -128,7 +128,7 @@ class EstacionController extends AbstractController
                 $rutasEstacion = $serializer->serialize(
                     $rutasEstacion,
                     "json",
-                    ["groups" => ["ruta"]]
+                    ["groups" => ["rutaTren"]]
                 );
     
                 return new Response($rutasEstacion);
