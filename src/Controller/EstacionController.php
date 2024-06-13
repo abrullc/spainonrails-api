@@ -18,11 +18,23 @@ class EstacionController extends AbstractController
             $estaciones = $this->getDoctrine()
                 ->getRepository(Estacion::class)
                 ->findAll();
+            
+            foreach ($estaciones as $estacion)
+            {
+                $imagePath = $estacion->getImagen();
+                if (!empty($imagePath))
+                {
+                    if (str_starts_with($imagePath, "/images"))
+                    {
+                        $estacion->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                    }
+                }
+            }
 
             $estaciones = $serializer->serialize(
                 $estaciones,
                 "json",
-                ["groups" => ["estacion", "ruta"]]
+                ["groups" => ["estacion"]]
             );
 
             return new Response($estaciones);
@@ -62,6 +74,15 @@ class EstacionController extends AbstractController
         if (!empty($estacion))
         {
             if ($request->isMethod("GET")) {
+                $imagePath = $estacion->getImagen();
+                if (!empty($imagePath))
+                {
+                    if (str_starts_with($imagePath, "/images"))
+                    {
+                        $estacion->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                    }
+                }
+                
                 $estacion = $serializer->serialize(
                     $estacion,
                     "json",
@@ -128,7 +149,7 @@ class EstacionController extends AbstractController
                 $rutasEstacion = $serializer->serialize(
                     $rutasEstacion,
                     "json",
-                    ["groups" => ["ruta"]]
+                    ["groups" => ["rutaTren"]]
                 );
     
                 return new Response($rutasEstacion);

@@ -134,6 +134,11 @@ tren:
     controller: App\Controller\TrenController::tren
     methods: GET|PUT|DELETE
 
+rutas_tren:
+    path: /tren/{id}/rutas
+    controller: App\Controller\TrenController::rutasTren
+    methods: GET
+
 # USUARIOS
 usuarios:
     path: /usuarios
@@ -144,3 +149,8 @@ usuario:
     path: /usuario/{id}
     controller: App\Controller\UsuarioController::usuario
     methods: GET|PUT|DELETE
+
+validate_login_usuario:
+    path: /usuario/validate
+    controller: App\Controller\UsuarioController::validateLoginUsuario
+    methods: POST

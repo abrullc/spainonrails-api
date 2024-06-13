@@ -125,6 +125,15 @@ class RutaController extends AbstractController
             $trenRuta = $ruta->getTren();
 
             if ($request->isMethod("GET")) {
+                $imagePath = $trenRuta->getImagen();
+                if (!empty($imagePath))
+                {
+                    if (str_starts_with($imagePath, "/images"))
+                    {
+                        $trenRuta->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                    }
+                }
+
                 $trenRuta = $serializer->serialize(
                     $trenRuta,
                     "json",
@@ -209,6 +218,18 @@ class RutaController extends AbstractController
         {
             if ($request->isMethod("GET")) {
                 $estacionesRuta = $ruta->getEstacion();
+
+                foreach ($estacionesRuta as $estacionRuta)
+                {
+                    $imagePath = $estacionRuta->getImagen();
+                    if (!empty($imagePath))
+                    {
+                        if (str_starts_with($imagePath, "/images"))
+                        {
+                            $estacionRuta->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                        }
+                    }
+                }
     
                 $estacionesRuta = $serializer->serialize(
                     $estacionesRuta,

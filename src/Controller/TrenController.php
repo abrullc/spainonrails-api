@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Ruta;
 use App\Entity\Tren;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,6 +18,18 @@ class TrenController extends AbstractController
             $trenes = $this->getDoctrine()
                 ->getRepository(Tren::class)
                 ->findAll();
+
+            foreach ($trenes as $tren)
+            {
+                $imagePath = $tren->getImagen();
+                if (!empty($imagePath))
+                {
+                    if (str_starts_with($imagePath, "/images"))
+                    {
+                        $tren->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                    }
+                }
+            }
 
             $trenes = $serializer->serialize(
                 $trenes,
@@ -59,6 +72,15 @@ class TrenController extends AbstractController
             ->findOneBy(["id" => $id]);
 
         if ($request->isMethod("GET")) {
+            $imagePath = $tren->getImagen();
+            if (!empty($imagePath))
+            {
+                if (str_starts_with($imagePath, "/images"))
+                {
+                    $tren->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                }
+            }
+
             $tren = $serializer->serialize(
                 $tren,
                 "json",
@@ -108,5 +130,36 @@ class TrenController extends AbstractController
         }
 
         return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+    }
+
+    public function rutasTren(SerializerInterface $serializer, Request $request)
+    {
+        $id = $request->get("id");
+
+        $tren = $this->getDoctrine()
+            ->getRepository(Tren::class)
+            ->findOneBy(["id" => $id]);
+
+        if (!empty($tren))
+        {
+            if ($request->isMethod("GET"))
+            {
+                $rutasTren = $this->getDoctrine()
+                    ->getRepository(Ruta::class)
+                    ->findBy(["tren" => $tren]);
+
+                $rutasTren = $serializer->serialize(
+                $rutasTren,
+                "json",
+                ["groups" => ["rutaTren"]]
+            );
+
+            return new Response($rutasTren);
+            }
+
+            return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+        }
+
+        return new JsonResponse(["msg" => "Tren no encontrado"], 404);
     }
 }

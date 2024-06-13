@@ -54,20 +54,20 @@ class PuntoInteres
     /**
      * @var float
      *
-     * @ORM\Column(name="longitud", type="float", precision=10, scale=0, nullable=false)
-     * 
-     * @Groups("puntoInteres", "puntosInteresEstacion")
-     */
-    private $longitud;
-
-    /**
-     * @var float
-     *
      * @ORM\Column(name="latitud", type="float", precision=10, scale=0, nullable=false)
      * 
      * @Groups("puntoInteres", "puntosInteresEstacion")
      */
     private $latitud;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="longitud", type="float", precision=10, scale=0, nullable=false)
+     * 
+     * @Groups("puntoInteres", "puntosInteresEstacion")
+     */
+    private $longitud;
 
     /**
      * @var string|null
@@ -163,24 +163,6 @@ class PuntoInteres
     }
 
     /**
-     * Get the value of longitud
-     */
-    public function getLongitud(): float
-    {
-        return $this->longitud;
-    }
-
-    /**
-     * Set the value of longitud
-     */
-    public function setLongitud(float $longitud): self
-    {
-        $this->longitud = $longitud;
-
-        return $this;
-    }
-
-    /**
      * Get the value of latitud
      */
     public function getLatitud(): float
@@ -194,6 +176,24 @@ class PuntoInteres
     public function setLatitud(float $latitud): self
     {
         $this->latitud = $latitud;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of longitud
+     */
+    public function getLongitud(): float
+    {
+        return $this->longitud;
+    }
+
+    /**
+     * Set the value of longitud
+     */
+    public function setLongitud(float $longitud): self
+    {
+        $this->longitud = $longitud;
 
         return $this;
     }

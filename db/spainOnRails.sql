@@ -42,8 +42,8 @@ CREATE TABLE IF NOT EXISTS estacion (
   nombre VARCHAR(100) NOT NULL,
   poblacion VARCHAR(100) NOT NULL,
   direccion VARCHAR(150) NOT NULL,
-  longitud FLOAT NOT NULL,
   latitud FLOAT NOT NULL,
+  longitud FLOAT NOT NULL,
   imagen VARCHAR(100)
 );
 
@@ -77,8 +77,8 @@ CREATE TABLE IF NOT EXISTS punto_interes (
   nombre VARCHAR(100) NOT NULL,
   direccion VARCHAR(150) NOT NULL,
   descripcion TEXT NOT NULL,
-  longitud FLOAT NOT NULL,
   latitud FLOAT NOT NULL,
+  longitud FLOAT NOT NULL,
   imagen VARCHAR(100),
   CONSTRAINT fk_punto_interes_estacion
     FOREIGN KEY (estacion_id)
@@ -173,13 +173,13 @@ CREATE TABLE IF NOT EXISTS visita (
     ON UPDATE NO ACTION
 );
 
-INSERT INTO tren (nombre, descripcion, capacidad)
+INSERT INTO tren (nombre, descripcion, capacidad, imagen)
 VALUES
-("Transcantábrico", "El Transcantábrico, se inaugura en 1983 en León, se reforma en el año 2000 y se transforma íntegramente en el año 2011 convirtiéndose en El Transcantábrico Gran Lujo, uno de los trenes más exclusivos y lujosos del mundo. Circula por una red ferroviaria de ancho métrico, lo que permite disfrutar de la naturaleza en todo su esplendor, desde la alta montaña, pasando por valles y riberas hasta llegar a besar el mar Cantábrico. Un viaje de glamour, paisaje, cultura y belleza que no le dejará indiferente.", 28),
-("Al Ándalus", "El Tren Al Ándalus se inaugura en 1985 teniendo como destino y fin el dar a conocer Andalucía. Diversos contratiempos hacen que en 2005 el tren deje de circular y queda aparcado en Sevilla. En 2011 se procede a una cuidadísima restauración y redecoración del tren, volviendo a su vida activa en 2012, por las vías de ancho Ibérico, que le confieren una mayor amplitud interior, que unido a sus casi 500m de longitud hacen de este tren un auténtico Palacio sobre ruedas. Un viaje a la Belle Époque de la exquisitez y la sofisticación con la tecnología de los tiempos actuales.", 64),
-("Costa Verde Express", "Tras el éxito alcanzado por El Transcantábrico en sus primeros años, en el año 2000 se construye un hermano gemelo al que en aquella época se estaba reformando y pasa a llamarse El Transcantábrico II. En 2011, El Transcantábrico I, que se inauguró en 1983 y se reformó en el 2000 se remodela integramente dando lugar a El Transcantábrico Gran Lujo y El Transcantábrico II cambia el nombre por El Transcantábrico Clásico, nombre que le dura hasta 2022. que pasa a denominarse Costa Verde Express, con una nueva ruta más corta y nuevos colores. Un tren de lujo moderno que le dará a conocer la bella España Verde.", 46),
-("Expreso de La Robla", "El expreso de la Robla se construye en 2009 como un tren-escuela, para impartir cursos de intermodalidad portuaria. A la par, realizaba viajes turísticos entre curso y curso, afianzando un gran mercado nacional. Una vez finalizado el periodo de cursos, continúa realizando viajes turísticos por todo el Norte de España, dentro de la red de ancho métrico. El expreso de la Robla es un tren juvenil con el confort de los legendarios trenes europeos y las comodidades y avances tecnológicos del siglo XXI. Un tren alegre y moderno que le mostrará los más espectaculares parajes de Castilla y León.", 54),
-("Tren de los Ochenta", "Con el paso de los años se han incorporado diferentes vehículos tanto de tracción como coches de viajeros que circularon por la red ferroviaria durante la década de los 80. La gran variedad de material incluido haría necesario cambiar el enfoque del proyecto original con el nombre con el que se conoce actualmente: el “Tren de los 80”. Se busca así la preservación de una composición completa, como una muestra viva de una etapa del pasado ferroviario e industrial de nuestro país y su evolución hacia el conjunto de la sociedad, siempre buscando la máxima similitud a la configuración comercial real en cuanto a plazas y servicios.", 80);
+("Transcantábrico", "El Transcantábrico, se inaugura en 1983 en León, se reforma en el año 2000 y se transforma íntegramente en el año 2011 convirtiéndose en El Transcantábrico Gran Lujo, uno de los trenes más exclusivos y lujosos del mundo. Circula por una red ferroviaria de ancho métrico, lo que permite disfrutar de la naturaleza en todo su esplendor, desde la alta montaña, pasando por valles y riberas hasta llegar a besar el mar Cantábrico. Un viaje de glamour, paisaje, cultura y belleza que no le dejará indiferente.", 28, "/images/trains/transcantabrico.jpg"),
+("Al Ándalus", "El Tren Al Ándalus se inaugura en 1985 teniendo como destino y fin el dar a conocer Andalucía. Diversos contratiempos hacen que en 2005 el tren deje de circular y queda aparcado en Sevilla. En 2011 se procede a una cuidadísima restauración y redecoración del tren, volviendo a su vida activa en 2012, por las vías de ancho Ibérico, que le confieren una mayor amplitud interior, que unido a sus casi 500m de longitud hacen de este tren un auténtico Palacio sobre ruedas. Un viaje a la Belle Époque de la exquisitez y la sofisticación con la tecnología de los tiempos actuales.", 64, "/images/trains/alandalus.jpg"),
+("Costa Verde Express", "Tras el éxito alcanzado por El Transcantábrico en sus primeros años, en el año 2000 se construye un hermano gemelo al que en aquella época se estaba reformando y pasa a llamarse El Transcantábrico II. En 2011, El Transcantábrico I, que se inauguró en 1983 y se reformó en el 2000 se remodela integramente dando lugar a El Transcantábrico Gran Lujo y El Transcantábrico II cambia el nombre por El Transcantábrico Clásico, nombre que le dura hasta 2022. que pasa a denominarse Costa Verde Express, con una nueva ruta más corta y nuevos colores. Un tren de lujo moderno que le dará a conocer la bella España Verde.", 46, "/images/trains/costaverde.jpeg"),
+("Expreso de La Robla", "El expreso de la Robla se construye en 2009 como un tren-escuela, para impartir cursos de intermodalidad portuaria. A la par, realizaba viajes turísticos entre curso y curso, afianzando un gran mercado nacional. Una vez finalizado el periodo de cursos, continúa realizando viajes turísticos por todo el Norte de España, dentro de la red de ancho métrico. El expreso de la Robla es un tren juvenil con el confort de los legendarios trenes europeos y las comodidades y avances tecnológicos del siglo XXI. Un tren alegre y moderno que le mostrará los más espectaculares parajes de Castilla y León.", 54, "/images/trains/expresolarobla.jpg"),
+("Tren de los Ochenta", "Con el paso de los años se han incorporado diferentes vehículos tanto de tracción como coches de viajeros que circularon por la red ferroviaria durante la década de los 80. La gran variedad de material incluido haría necesario cambiar el enfoque del proyecto original con el nombre con el que se conoce actualmente: el “Tren de los 80”. Se busca así la preservación de una composición completa, como una muestra viva de una etapa del pasado ferroviario e industrial de nuestro país y su evolución hacia el conjunto de la sociedad, siempre buscando la máxima similitud a la configuración comercial real en cuanto a plazas y servicios.", 80, "/images/trains/trendelos80.jpg");
 
 INSERT INTO ruta (tren_id, origen, destino, descripcion)
 VALUES
@@ -211,9 +211,18 @@ Día 6: Viveiro – Santiago de Compostela"),
 "Día 1: Bilbao – Espinosa de Los Monteros
 Día 2: Espinosa de Los Monteros – Cistierna
 Día 3: Cistierna – León"),
-("5", "Madrid", "Valencia", "Bajo el nombre de “Valencia Expreso” -en homenaje al Rápido que unía Madrid con València y Portbou a través del “Directo” de Cuenca, hoy cerrado parcialmente- nos desplazaremos a la ciudad del Turia -vía Albacete- a bordo de nuestro “Tren de los Ochenta” al completo y remolcado por una de las 269.400 del parque de Alsa Rail.");
+("5", "Madrid", "Valencia", "Bajo el nombre de “Valencia Expreso” -en homenaje al Rápido que unía Madrid con València y Portbou a través del “Directo” de Cuenca, hoy cerrado parcialmente- nos desplazaremos a la ciudad del Turia -vía Albacete- a bordo de nuestro “Tren de los Ochenta” al completo y remolcado por una de las 269.400 del parque de Alsa Rail."),
+("1", "Santiago de Compostela", "San Sebastián", 
+"Día 1: Santiago de Compostela – Viveiro
+Día 2: Viveiro – Oviedo
+Día 3: Oviedo – Llanes
+Día 4: Llanes
+Día 5: Llanes - Cabezón de la Sal
+Día 6: Cabezón de La Sal – Santander
+Día 7: Santander - Carranza
+Día 8: Carranza - San Sebastián");
 
-INSERT INTO estacion (nombre, poblacion, direccion, longitud, latitud)
+INSERT INTO estacion (nombre, poblacion, direccion, latitud, longitud)
 VALUES
 /*1*/("San Sebastián", "San Sebastián", "De Francia Ibilbidea, 22, 20012 Donostia, Gipuzkoa", 43.317672075902976, -1.9767051319885167),
 /*2*/("Carranza", "Ambasaguas", "48890 Ambasaguas, Vizcaya", 43.23893883331732, -3.3579304449974674),
@@ -276,21 +285,32 @@ VALUES
 (5, 23),
 (5, 24),
 (5, 25),
-(5, 26);
+(5, 26),
+(6, 9),
+(6, 8),
+(6, 7),
+(6, 6),
+(6, 5),
+(6, 4),
+(6, 3),
+(6, 2),
+(6, 1);
 
-INSERT INTO punto_interes (estacion_id, nombre, direccion, descripcion, longitud, latitud)
+INSERT INTO punto_interes (estacion_id, nombre, direccion, descripcion, latitud, longitud, imagen)
 VALUES
 (26, "Ciutat de les Arts i les Ciències", "Quatre Carreres, 46013 Valencia", "Obra del arquitecto valenciano Santiago Calatrava, tiene varios edificios que se han convertido en iconos de la ciudad. Se trata de un complejo de ocio científico y cultural para disfrutar en familia o con amigos que hoy en día ocupa alrededor de dos kilómetros del antiguo cauce del río Turia.
-Necesitarás entradas para poder acceder al interior del Hemisfèric, el Museu de les Ciències  y Oceanogràfic y puedes comprarlas por separado o conjuntas, de los edificios que más te interese visitar.", 39.45487252369318, -0.35049511511959186),
-(26, "Jardín Botánico de la Universidad de Valencia", "C/ de Quart, 80, Extramurs, 46008 València, Valencia", "Invernadero y jardín botánico universitario con 4500 especies, incluidas palmeras y plantas exóticas.", 39.47551443954715, -0.3863507272502327),
+Necesitarás entradas para poder acceder al interior del Hemisfèric, el Museu de les Ciències  y Oceanogràfic y puedes comprarlas por separado o conjuntas, de los edificios que más te interese visitar.", 39.45487252369318, -0.35049511511959186, "/images/interestPoints/ciudadArtesCiencias.jpg"),
+(26, "Jardín Botánico de la Universidad de Valencia", "C/ de Quart, 80, Extramurs, 46008 València, Valencia", "Invernadero y jardín botánico universitario con 4500 especies, incluidas palmeras y plantas exóticas.", 39.47551443954715, -0.3863507272502327, "/images/interestPoints/jardinBotanicoValencia.jpg"),
 (26, "Torre del Micalet", "Pça. de la Reina, s/n, Ciutat Vella, 46001 València, Valencia", "El Miguelete es una torre de estilo gótico valenciano,​ tiene 51 metros de altura hasta la terraza, los mismos que mide su perímetro, y 63 metros en total. Tiene forma de prisma octogonal y posee 207 escalones.
-Es accesible todos los días del año mediante la adquisición de una entrada.", 39.475322014030965, -0.3756316715071305),
-(2, "Bar Felipe", "Barrio de Ambasaguas, 16, 48890 Ambasaguas, Biscay", "Almuerzos, comidas, menús. Comida casera y buen ambiente", 43.23796343980198, -3.356788713476831);
+Es accesible todos los días del año mediante la adquisición de una entrada.", 39.475322014030965, -0.3756316715071305, "/images/interestPoints/micalet.jpg"),
+(2, "Bar Felipe", "Barrio de Ambasaguas, 16, 48890 Ambasaguas, Biscay", "Almuerzos, comidas, menús. Comida casera y buen ambiente", 43.23796343980198, -3.356788713476831, "/images/interestPoints/barFelipeAmbasaguas.png"),
+(11, "Alhambra de Granada", "C. Real de la Alhambra, s/n, Centro, 18009 Granada", "La Alhambra es una ciudad-palacio donde vivía el rey nazarí de Granada y su corte hasta su reconquista en 1492 por parte de los Reyes Católicos. Su ubicación fue escogida por su posición estratégica, ya que desde lo alto de la colina se domina toda la ciudad.
+Es el monumento más visitado de España. Alrededor de 3 millones de personas visitan la Alhambra cada año.", 37.1760769410708, -3.588141612370738, "/images/interestPoints/alhambraGranada.jpg");
 
-INSERT INTO usuario (username, password)
+INSERT INTO usuario (username, password, imagen)
 VALUES
-("Antonio", "test"),
-("abrullc", "12354");
+("Antonio", "test", "https://avatars.githubusercontent.com/u/8101959?v=4"),
+("abrullc", "test", "/images/users/abrullc.png");
 
 INSERT INTO plan_viaje (nombre)
 VALUES

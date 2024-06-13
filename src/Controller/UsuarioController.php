@@ -17,6 +17,18 @@ class UsuarioController extends AbstractController
             $usuarios = $this->getDoctrine()
                 ->getRepository(Usuario::class)
                 ->findAll();
+            
+            foreach ($usuarios as $usuario)
+            {
+                $imagePath = $usuario->getImagen();
+                if (!empty($imagePath))
+                {
+                    if (str_starts_with($imagePath, "/images"))
+                    {
+                        $usuario->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                    }
+                }
+            }
 
             $usuarios = $serializer->serialize(
                 $usuarios,
@@ -29,22 +41,31 @@ class UsuarioController extends AbstractController
 
         if ($request->isMethod("POST")) {
             $bodyData = $request->getContent();
-            $usuario = $serializer->deserialize(
+            $registerUsuario = $serializer->deserialize(
                 $bodyData,
                 Usuario::class,
                 "json"
             );
 
-            $this->getDoctrine()->getManager()->persist($usuario);
-            $this->getDoctrine()->getManager()->flush();
+            $usuario = $this->getDoctrine()
+                ->getRepository(Usuario::class)
+                ->findOneBy(["username" => $registerUsuario->getUsername()]);
 
-            $usuario = $serializer->serialize(
-                $usuario, 
-                "json", 
-                ["groups" => ["usuario"]]
-            );
-            
-            return new Response($usuario);
+            if (empty($usuario))
+            {
+                $this->getDoctrine()->getManager()->persist($registerUsuario);
+                $this->getDoctrine()->getManager()->flush();
+
+                $registerUsuario = $serializer->serialize(
+                    $registerUsuario, 
+                    "json", 
+                    ["groups" => ["usuario"]]
+                );
+                
+                return new Response($registerUsuario);
+            }
+
+            return new Response(null);
         }
 
         return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
@@ -61,6 +82,15 @@ class UsuarioController extends AbstractController
         if (!empty($usuario))
         {
             if ($request->isMethod("GET")) {
+                $imagePath = $usuario->getImagen();
+                if (!empty($imagePath))
+                {
+                    if (str_starts_with($imagePath, "/images"))
+                    {
+                        $usuario->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                    }
+                }
+
                 $usuario = $serializer->serialize(
                     $usuario,
                     "json",
@@ -109,5 +139,31 @@ class UsuarioController extends AbstractController
         }
 
         return new JsonResponse(["msg" => "Usuario no encontrado"], 404);
+    }
+
+    public function validateLoginUsuario(SerializerInterface $serializer, Request $request)
+    {
+        if ($request->isMethod("POST")) {
+            $bodyData = $request->getContent();
+            $loginUsuario = $serializer->deserialize(
+                $bodyData,
+                Usuario::class,
+                "json"
+            );
+
+            $usuario = $this->getDoctrine()
+                ->getRepository(Usuario::class)
+                ->findOneBy(["username" => $loginUsuario->getUsername(), "password" => $loginUsuario->getPassword()]);
+
+            $usuario = $serializer->serialize(
+                $usuario, 
+                "json", 
+                ["groups" => ["usuario"]]
+            );
+            
+            return new Response($usuario);
+        }
+
+        return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
     }
 }
