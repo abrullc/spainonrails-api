@@ -41,22 +41,31 @@ class UsuarioController extends AbstractController
 
         if ($request->isMethod("POST")) {
             $bodyData = $request->getContent();
-            $usuario = $serializer->deserialize(
+            $registerUsuario = $serializer->deserialize(
                 $bodyData,
                 Usuario::class,
                 "json"
             );
 
-            $this->getDoctrine()->getManager()->persist($usuario);
-            $this->getDoctrine()->getManager()->flush();
+            $usuario = $this->getDoctrine()
+                ->getRepository(Usuario::class)
+                ->findOneBy(["username" => $registerUsuario->getUsername()]);
 
-            $usuario = $serializer->serialize(
-                $usuario, 
-                "json", 
-                ["groups" => ["usuario"]]
-            );
-            
-            return new Response($usuario);
+            if (empty($usuario))
+            {
+                $this->getDoctrine()->getManager()->persist($registerUsuario);
+                $this->getDoctrine()->getManager()->flush();
+
+                $registerUsuario = $serializer->serialize(
+                    $registerUsuario, 
+                    "json", 
+                    ["groups" => ["usuario"]]
+                );
+                
+                return new Response($registerUsuario);
+            }
+
+            return new Response(null);
         }
 
         return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
@@ -130,5 +139,31 @@ class UsuarioController extends AbstractController
         }
 
         return new JsonResponse(["msg" => "Usuario no encontrado"], 404);
+    }
+
+    public function validateLoginUsuario(SerializerInterface $serializer, Request $request)
+    {
+        if ($request->isMethod("POST")) {
+            $bodyData = $request->getContent();
+            $loginUsuario = $serializer->deserialize(
+                $bodyData,
+                Usuario::class,
+                "json"
+            );
+
+            $usuario = $this->getDoctrine()
+                ->getRepository(Usuario::class)
+                ->findOneBy(["username" => $loginUsuario->getUsername(), "password" => $loginUsuario->getPassword()]);
+
+            $usuario = $serializer->serialize(
+                $usuario, 
+                "json", 
+                ["groups" => ["usuario"]]
+            );
+            
+            return new Response($usuario);
+        }
+
+        return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
     }
 }
