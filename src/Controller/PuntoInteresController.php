@@ -19,6 +19,18 @@ class PuntoInteresController extends AbstractController
             $puntosInteres = $this->getDoctrine()
                 ->getRepository(PuntoInteres::class)
                 ->findAll();
+            
+            foreach ($puntosInteres as $puntoInteres)
+            {
+                $imagePath = $puntoInteres->getImagen();
+                if (!empty($imagePath))
+                {
+                    if (str_starts_with($imagePath, "/images"))
+                    {
+                        $puntoInteres->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                    }
+                }
+            }
 
             $puntosInteres = $serializer->serialize(
                 $puntosInteres,
@@ -43,6 +55,15 @@ class PuntoInteresController extends AbstractController
         if (!empty($puntoInteres))
         {
             if ($request->isMethod("GET")) {
+                $imagePath = $puntoInteres->getImagen();
+                if (!empty($imagePath))
+                {
+                    if (str_starts_with($imagePath, "/images"))
+                    {
+                        $puntoInteres->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                    }
+                }
+
                 $puntoInteres = $serializer->serialize(
                     $puntoInteres,
                     "json",
@@ -109,6 +130,18 @@ class PuntoInteresController extends AbstractController
                 $puntosInteresEstacion = $this->getDoctrine()
                     ->getRepository(PuntoInteres::class)
                     ->findBy(["estacion" => $estacion]);
+                
+                foreach ($puntosInteresEstacion as $puntoInteresEstacion)
+                {
+                    $imagePath = $puntoInteresEstacion->getImagen();
+                    if (!empty($imagePath))
+                    {
+                        if (str_starts_with($imagePath, "/images"))
+                        {
+                            $puntoInteresEstacion->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                        }
+                    }
+                }
                 
                 $puntosInteresEstacion = $serializer->serialize(
                     $puntosInteresEstacion, 

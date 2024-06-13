@@ -135,6 +135,18 @@ class PlanViajeController extends AbstractController
                     ->getRepository(Visita::class)
                     ->findBy(["planViaje" => $planViaje]);
 
+                foreach ($visitasPlanViaje as $visitaPlanViaje)
+                {
+                    $imagePath = $visitaPlanViaje->getPuntoInteres()->getImagen();
+                    if (!empty($imagePath))
+                    {
+                        if (str_starts_with($imagePath, "/images"))
+                        {
+                            $visitaPlanViaje->getPuntoInteres()->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                        }
+                    }
+                }
+
                 $visitasPlanViaje = $serializer->serialize(
                     $visitasPlanViaje,
                     "json",

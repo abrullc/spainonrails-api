@@ -17,6 +17,18 @@ class UsuarioController extends AbstractController
             $usuarios = $this->getDoctrine()
                 ->getRepository(Usuario::class)
                 ->findAll();
+            
+            foreach ($usuarios as $usuario)
+            {
+                $imagePath = $usuario->getImagen();
+                if (!empty($imagePath))
+                {
+                    if (str_starts_with($imagePath, "/images"))
+                    {
+                        $usuario->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                    }
+                }
+            }
 
             $usuarios = $serializer->serialize(
                 $usuarios,
@@ -61,6 +73,15 @@ class UsuarioController extends AbstractController
         if (!empty($usuario))
         {
             if ($request->isMethod("GET")) {
+                $imagePath = $usuario->getImagen();
+                if (!empty($imagePath))
+                {
+                    if (str_starts_with($imagePath, "/images"))
+                    {
+                        $usuario->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                    }
+                }
+
                 $usuario = $serializer->serialize(
                     $usuario,
                     "json",
