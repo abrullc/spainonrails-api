@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Ruta;
 use App\Entity\Tren;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -108,5 +109,36 @@ class TrenController extends AbstractController
         }
 
         return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+    }
+
+    public function rutasTren(SerializerInterface $serializer, Request $request)
+    {
+        $id = $request->get("id");
+
+        $tren = $this->getDoctrine()
+            ->getRepository(Tren::class)
+            ->findOneBy(["id" => $id]);
+
+        if (!empty($tren))
+        {
+            if ($request->isMethod("GET"))
+            {
+                $rutasTren = $this->getDoctrine()
+                    ->getRepository(Ruta::class)
+                    ->findBy(["tren" => $tren]);
+
+                $rutasTren = $serializer->serialize(
+                $rutasTren,
+                "json",
+                ["groups" => ["rutaTren"]]
+            );
+
+            return new Response($rutasTren);
+            }
+
+            return new JsonResponse(["msg" => $request->getMethod() . " no permitido"]);
+        }
+
+        return new JsonResponse(["msg" => "Tren no encontrado"], 404);
     }
 }
