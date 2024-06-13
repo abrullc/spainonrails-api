@@ -54,20 +54,20 @@ class Estacion
     /**
      * @var float
      *
-     * @ORM\Column(name="longitud", type="float", precision=10, scale=0, nullable=false)
-     * 
-     * @Groups("estacion")
-     */
-    private $longitud;
-
-    /**
-     * @var float
-     *
      * @ORM\Column(name="latitud", type="float", precision=10, scale=0, nullable=false)
      * 
      * @Groups("estacion")
      */
     private $latitud;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="longitud", type="float", precision=10, scale=0, nullable=false)
+     * 
+     * @Groups("estacion")
+     */
+    private $longitud;
 
     /**
      * @var string|null
@@ -166,24 +166,6 @@ class Estacion
     }
 
     /**
-     * Get the value of longitud
-     */
-    public function getLongitud(): float
-    {
-        return $this->longitud;
-    }
-
-    /**
-     * Set the value of longitud
-     */
-    public function setLongitud(float $longitud): self
-    {
-        $this->longitud = $longitud;
-
-        return $this;
-    }
-
-    /**
      * Get the value of latitud
      */
     public function getLatitud(): float
@@ -197,6 +179,24 @@ class Estacion
     public function setLatitud(float $latitud): self
     {
         $this->latitud = $latitud;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of longitud
+     */
+    public function getLongitud(): float
+    {
+        return $this->longitud;
+    }
+
+    /**
+     * Set the value of longitud
+     */
+    public function setLongitud(float $longitud): self
+    {
+        $this->longitud = $longitud;
 
         return $this;
     }
