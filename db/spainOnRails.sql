@@ -211,7 +211,16 @@ Día 6: Viveiro – Santiago de Compostela"),
 "Día 1: Bilbao – Espinosa de Los Monteros
 Día 2: Espinosa de Los Monteros – Cistierna
 Día 3: Cistierna – León"),
-("5", "Madrid", "Valencia", "Bajo el nombre de “Valencia Expreso” -en homenaje al Rápido que unía Madrid con València y Portbou a través del “Directo” de Cuenca, hoy cerrado parcialmente- nos desplazaremos a la ciudad del Turia -vía Albacete- a bordo de nuestro “Tren de los Ochenta” al completo y remolcado por una de las 269.400 del parque de Alsa Rail.");
+("5", "Madrid", "Valencia", "Bajo el nombre de “Valencia Expreso” -en homenaje al Rápido que unía Madrid con València y Portbou a través del “Directo” de Cuenca, hoy cerrado parcialmente- nos desplazaremos a la ciudad del Turia -vía Albacete- a bordo de nuestro “Tren de los Ochenta” al completo y remolcado por una de las 269.400 del parque de Alsa Rail."),
+("1", "Santiago de Compostela", "San Sebastián", 
+"Día 1: Santiago de Compostela – Viveiro
+Día 2: Viveiro – Oviedo
+Día 3: Oviedo – Llanes
+Día 4: Llanes
+Día 5: Llanes - Cabezón de la Sal
+Día 6: Cabezón de La Sal – Santander
+Día 7: Santander - Carranza
+Día 8: Carranza - San Sebastián");
 
 INSERT INTO estacion (nombre, poblacion, direccion, longitud, latitud)
 VALUES
@@ -276,7 +285,16 @@ VALUES
 (5, 23),
 (5, 24),
 (5, 25),
-(5, 26);
+(5, 26),
+(6, 9),
+(6, 8),
+(6, 7),
+(6, 6),
+(6, 5),
+(6, 4),
+(6, 3),
+(6, 2),
+(6, 1);
 
 INSERT INTO punto_interes (estacion_id, nombre, direccion, descripcion, longitud, latitud)
 VALUES
