@@ -154,3 +154,8 @@ validate_login_usuario:
     path: /usuario/validate
     controller: App\Controller\UsuarioController::validateLoginUsuario
     methods: POST
+
+validate_new_usuario:
+    path: /usuario/{username}/validate
+    controller: App\Controller\UsuarioController::validateNewUsuario
+    methods: POST
