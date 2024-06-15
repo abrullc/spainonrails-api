@@ -102,6 +102,15 @@ class UsuarioController extends AbstractController
                     
                 $this->getDoctrine()->getManager()->persist($usuario);
                 $this->getDoctrine()->getManager()->flush();
+
+                $imagePath = $usuario->getImagen();
+                if (!empty($imagePath))
+                {
+                    if (str_starts_with($imagePath, "/images"))
+                    {
+                        $usuario->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                    }
+                }
     
                 $usuario = $serializer->serialize(
                     $usuario,
@@ -145,6 +154,18 @@ class UsuarioController extends AbstractController
             $usuario = $this->getDoctrine()
                 ->getRepository(Usuario::class)
                 ->findOneBy(["username" => $loginUsuario->getUsername(), "password" => $loginUsuario->getPassword()]);
+            
+            if (!empty($usuario))
+            {
+                $imagePath = $usuario->getImagen();
+                if (!empty($imagePath))
+                {
+                    if (str_starts_with($imagePath, "/images"))
+                    {
+                        $usuario->setImagen($request->getSchemeAndHttpHost() . $imagePath);
+                    }
+                }
+            }
 
             $usuario = $serializer->serialize(
                 $usuario, 
